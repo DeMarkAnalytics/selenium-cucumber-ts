@@ -1,4 +1,6 @@
 # cucumber-selenium-typescript
+Blatantly stolen and ported to typescript from:
+   https://github.com/selenium-cucumber/selenium-cucumber-ruby
 
 ## Navigation Steps
 
