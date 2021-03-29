@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "moduleResolution": "node",
+  "compilerOptions": {
+    "declaration": true,
+    "outDir": "lib",
+  },
+  "include": [
+    "src/**/*.ts",
+  ], 
+  "exclude": [
+    "**/*_spec.ts"
+  ]
+}
