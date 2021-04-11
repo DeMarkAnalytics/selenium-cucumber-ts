@@ -1,5 +1,11 @@
 import assert from "assert";
+import { By } from "selenium-webdriver";
 import { World } from "../../support/world";
+import * as image from "./images";
+
+export async function getPageTitle(self: World) {
+  return await self.driver.getTitle();
+}
 
 export async function checkTitle(self: World, expected: string, negate: string) {
   const pageTitle = await getPageTitle(self);
@@ -18,6 +24,10 @@ export async function checkPartialTitle(self: World, expected: string, negate: s
   } else {
     assert.doesNotMatch(pageTitle, new RegExp(`.*${escapeRegExp(expected)}.*`));
   }
+}
+
+export async function getElementText(self: World, elementType: string, typeValue: string) {
+  return await self.driver.findElement(elementLocator(elementType, typeValue)).getText();
 }
 
 export async function checkElementText(
@@ -87,13 +97,16 @@ export async function checkElementEnable(self: World, elementType: string, typeV
     }
 }
 
+export async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
+    return await self.driver.findElement(elementLocator(elementType, typeValue)).isDisplayed()
+}
+
 export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate: string) {
-  let elementPresent = await isElementDisplayed(self, elementType, typeValue)
-  
   if (negate === null) {
-    assert(elementPresent)
+    assert(await isElementDisplayed(self, elementType, typeValue))
   } else {
-    assert(!(elementPresent))
+    // TODO: how to catch error here when elment doesn't exist
+    assert(!(await isElementDisplayed(self, elementType, typeValue)))
   }
 }
 
@@ -106,21 +119,49 @@ export function validateLocater(locator: string) {
   }
 }
 
-async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
-    //console.log("here", await self.driver.findElement(elementLocator(elementType, typeValue)).isDisplayed() )
-    return await self.driver.findElement(elementLocator(elementType, typeValue)).isDisplayed()
+export async function isCheckboxChecked(self: World, elementType: string, typeValue: string, state: string) {
+  if (state === "checked") {
+    assert(await (await self.driver.findElement(elementLocator(elementType, typeValue))).isSelected())
+  } else if (state === "unchecked") {
+    assert(!(await (await self.driver.findElement(elementLocator(elementType, typeValue))).isSelected()))
+  }
 }
 
-export async function isCheckboxChecked(self: World, elementType: string, typeValue: string, negate: string) {
-    let checkbox = await self.driver.findElement(elementLocator(elementType, typeValue))
-    console.log("This", checkbox)
+export async function isRadioButtonSelected(self: World, elementType: string, typeValue: string, state: string) {
+  if (state === "selected") {
+    assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected())
+  } else if (state === "unselected") {
+    assert(!(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected()))
+  }
 }
 
-async function getPageTitle(self: World) {
-  return await self.driver.getTitle();
+export async function isOptionFromDropDownSelected(self: World, elementType: string, typeValue: string, option: string, optionAttribute: string, state: string) {
+  if (state === "selected") {
+    assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected())
+  } else if (state === "unselected") {
+    assert(!(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected()))
+  } 
+}
+export async function isOptionFromRadioButtonGroupSelected(self: World, elementType: string, typeValue: string, option: string, optionAttribute: string, state: string) {
+  //how to navigate radio buttons???
+  return 'pending'
 }
 
-function elementLocator(elementType: string, typeValue: string) {
+export async function getElementAttribute(self: World, elementType: string, typeValue: string, hasType: string) {
+  return await self.driver.findElement(elementLocator(elementType, typeValue)).getAttribute(hasType);
+}
+
+export async function checkAlertText(self: World, text: string) {
+  let actualText = await self.driver.switchTo().alert().getText()
+  
+  assert.strictEqual(actualText, text)
+}
+
+export async function isImageSimilar(self: World, actualImageType: string, actualImageName: string, expectedImageType: string, expectedImageName: string) {
+  await image.compare(self, actualImageType, actualImageName, expectedImageType, expectedImageName)
+}
+
+export function elementLocator(elementType: string, typeValue: string) {
   let retValue = null;
   switch (elementType) {
     case "id":
@@ -138,16 +179,14 @@ function elementLocator(elementType: string, typeValue: string) {
     case "css":
       retValue = { css: typeValue };
       break;
+    case "link":
+      retValue = By.linkText(typeValue)
+      break;
+    case "partialLink":
+      retValue = By.partialLinkText(typeValue)
+      break;
   }
   return retValue;
-}
-
-async function getElementText(self: World, elementType: string, typeValue: string) {
-  return await self.driver.findElement(elementLocator(elementType, typeValue)).getText();
-}
-
-async function getElementAttribute(self: World, elementType: string, typeValue: string, hasType: string) {
-  return await self.driver.findElement(elementLocator(elementType, typeValue)).getAttribute(hasType);
 }
 
 // this is to take a string with special characters and escape them so they are not interpreted by regex
