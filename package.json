@@ -1,5 +1,5 @@
 {
-  "name": "selenium-cucumber-javascript",
+  "name": "@dm/selenium-cucumber-ts",
   "version": "0.0.1",
   "description": "",
   "main": "index.js",
@@ -8,27 +8,17 @@
     "prefeature-test": "yarn run build-local",
     "test": "mkdir -p ../reports; ./node_modules/.bin/cucumber-js -f @cucumber/pretty-formatter -f usage:../reports/BDD_Usage_report-$(date +%s).txt"
   },
+  "publishConfig":{
+    "registry":"https://artifactory.marketstudies.com/artifactory/api/npm/npm-local/"
+  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/testcookbook/js-cucumber-selenium.git"
+    "url": "git+https://github.com/DeMarkAnalytics/selenium-cucumber-ts.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/testcookbook/js-cucumber-selenium/issues"
+    "url": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts/issues"
   },
-  "homepage": "https://github.com/testcookbook/js-cucumber-selenium#readme",
-  "devDependencies": {
-    "chromedriver": "^88.0.0",
-    "geckodriver": "^1.22.1",
-    "webdriver-manager": "^12.1.8",
-    "typescript": "4.2.2",
-    "@types/selenium-webdriver": "^4.0.0-alpha.7",
-    "selenium-webdriver": "^4.0.0-alpha.7"
-  },
-  "dependencies": {
-    "assert": "^2.0.0",
-    "@cucumber/cucumber": "^7.0.0",
-    "@cucumber/pretty-formatter": "^1.0.0-alpha.0"
-  }
+  "homepage": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts#readme"
 }

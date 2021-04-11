@@ -1,6 +1,6 @@
 const feature = [
   '--require-module ts-node/register',
-  '--require features/**/*.ts',
+  '--require step_definitions/**/*.ts',
   `--format ${
     process.env.CI || !process.stdout.isTTY ? 'progress' : 'progress-bar'
   }`,
