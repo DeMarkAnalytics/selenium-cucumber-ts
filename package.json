@@ -1,6 +1,6 @@
 {
   "name": "@dm/selenium-cucumber-ts",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,8 +8,8 @@
     "prefeature-test": "yarn run build-local",
     "test": "mkdir -p ../reports; ./node_modules/.bin/cucumber-js -f @cucumber/pretty-formatter -f usage:../reports/BDD_Usage_report-$(date +%s).txt"
   },
-  "publishConfig":{
-    "registry":"https://artifactory.marketstudies.com/artifactory/api/npm/npm-local/"
+  "publishConfig": {
+    "registry": "https://artifactory.marketstudies.com/artifactory/api/npm/npm-local/"
   },
   "repository": {
     "type": "git",
