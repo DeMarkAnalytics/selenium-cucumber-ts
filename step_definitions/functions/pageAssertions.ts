@@ -1,6 +1,6 @@
 import assert from "assert";
 import { By } from "selenium-webdriver";
-import { World } from "../../support/world";
+import { World } from "../world";
 import * as image from "./images";
 
 export async function getPageTitle(self: World) {

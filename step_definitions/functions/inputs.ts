@@ -1,4 +1,4 @@
-import { World } from "../../support/world";
+import { World } from "../world";
 import { elementLocator } from "./pageAssertions"
 
 export async function enterText(self: World, elementType: string, typeValue: string, text: string) {

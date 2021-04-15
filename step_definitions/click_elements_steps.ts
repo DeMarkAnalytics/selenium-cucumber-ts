@@ -1,5 +1,5 @@
 import { Given, When, Then } from "@cucumber/cucumber";
-import { World } from "../support/world";
+import { World } from "./world";
 import { validateLocater } from "./functions/pageAssertions"
 import * as mouse from "./functions/clicks"
 

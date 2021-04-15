@@ -1,4 +1,4 @@
-import { World } from "../../support/world";
+import { World } from "../world";
 
 export async function printConfiguration(self: World) {
   const date = new Date()

@@ -1,4 +1,4 @@
-import { World } from "../support/world";
+import { World } from "./world";
 import { Then } from "@cucumber/cucumber";
 import * as page from "./functions/pageAssertions";
 

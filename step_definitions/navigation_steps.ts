@@ -1,5 +1,5 @@
 import { Then } from "@cucumber/cucumber";
-import { World } from "../support/world";
+import { World } from "./world";
 // keeping these all labeld as Then, although they should all be Whens
 // only keeping them Then as that's what they were labeled as in the ruby example:
 //https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/navigation_steps.rb
