@@ -2,6 +2,37 @@
 Blatantly stolen and ported to typescript from:
    https://github.com/selenium-cucumber/selenium-cucumber-ruby
 
+## how to use:
+In your `cucumber.js` file you'll need to add the following:
+  at the top:
+```
+process.env.TS_NODE_IGNORE = '/node_modules\/(?!(@dm|@symbolik)\/)/'
+```
+in the `feature` var
+```
+  '--require node_modules/@dm/selenium-cucumber-ts/step_definitions/**/*.ts',
+```
+
+For autocompletion of step defs in vscode
+```
+{
+    "cucumberautocomplete.steps": [
+        "features/step_definitions/**/*_steps.ts",
+        "integration-tester/steps/**/*steps.ts",
+        "node_modules/@dm/selenium-cucumber-ts/step_definitions/**/*_steps.ts"
+    ],
+    "cucumberautocomplete.smartSnippets": true,
+    "cucumberautocomplete.stepsInvariants": true,
+    "cucumberautocomplete.customParameters": [
+        {
+            "parameter": "{jsonObject}",
+            "value": "(it|item {string}|file {string}|{string})"
+        }
+    ],
+}
+```
+
+
 ## Navigation Steps
 
 To open/close URL and to navigate between pages use following steps :

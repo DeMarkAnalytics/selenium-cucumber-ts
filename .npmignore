@@ -1,0 +1,6 @@
+cookbooks
+*.deb
+*.tgz
+**tmp**
+features
+testing
