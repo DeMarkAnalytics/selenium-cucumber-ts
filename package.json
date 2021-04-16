@@ -1,5 +1,5 @@
 {
-  "name": "@dm/selenium-cucumber-ts",
+  "name": "@symbolik/selenium-cucumber-ts",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -20,5 +20,17 @@
   "bugs": {
     "url": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts/issues"
   },
-  "homepage": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts#readme"
+  "homepage": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts#readme",
+  "devDependencies": {
+    "@cucumber/cucumber": "^7.1.0",
+    "@cucumber/pretty-formatter": "^1.0.0-alpha.0",
+    "@types/selenium-webdriver": "^4.0.12",
+    "selenium-webdriver": "^4.0.0-beta.3",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
+  },
+  "peerDependencies": {
+    "@cucumber/cucumber": "^7.1.0",
+    "selenium-webdriver": "^4.0.0-beta.3"
+  }
 }

@@ -1,8 +1,12 @@
 # cucumber-selenium-typescript
+
 Blatantly stolen and ported to typescript from:
    https://github.com/selenium-cucumber/selenium-cucumber-ruby
 
 ## how to use:
+Add to your project
+`yarn add -D @symbolik/selenium-cucumber-ruby`
+
 In your `cucumber.js` file you'll need to add the following:
   at the top:
 ```
@@ -13,13 +17,16 @@ in the `feature` var
   '--require node_modules/@dm/selenium-cucumber-ts/step_definitions/**/*.ts',
 ```
 
-For autocompletion of step defs in vscode
+### For autocompletion of step defs in vscode
+
+install `Cucumber (Cherkin) Full Support` plugin
+
 ```
 {
     "cucumberautocomplete.steps": [
         "features/step_definitions/**/*_steps.ts",
         "integration-tester/steps/**/*steps.ts",
-        "node_modules/@dm/selenium-cucumber-ts/step_definitions/**/*_steps.ts"
+        "node_modules/@symbolik/selenium-cucumber-ts/step_definitions/**/*_steps.ts"
     ],
     "cucumberautocomplete.smartSnippets": true,
     "cucumberautocomplete.stepsInvariants": true,

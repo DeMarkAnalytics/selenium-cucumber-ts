@@ -122,6 +122,7 @@ Then(
   /^actual image having (.+) "(.*?)" and expected image having (.+) "(.*?)" should be similar$/,
   async function (this: World, actualImageType: string, actualImageName: string, expectedImageType: string, expectedImageName: string) {
     await page.isImageSimilar(this, actualImageType, actualImageName, expectedImageType, expectedImageName)
+    // TODO
     return "pending";
   }
 );
