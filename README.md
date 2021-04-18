@@ -10,11 +10,11 @@ Add to your project
 In your `cucumber.js` file you'll need to add the following:
   at the top:
 ```
-process.env.TS_NODE_IGNORE = '/node_modules\/(?!(@dm|@symbolik)\/)/'
+process.env.TS_NODE_IGNORE = '/node_modules\/(?!(@symbolik)\/)/'
 ```
 in the `feature` var
 ```
-  '--require node_modules/@dm/selenium-cucumber-ts/step_definitions/**/*.ts',
+  '--require node_modules/@symbolik/selenium-cucumber-ts/step_definitions/**/*.ts',
 ```
 
 ### For autocompletion of step defs in vscode
