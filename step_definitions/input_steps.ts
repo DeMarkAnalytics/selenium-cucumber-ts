@@ -17,20 +17,13 @@ Then(
   }
 );
 
-Then(
-  /^I select (\d+) option by index from dropdown having (.+) "(.*?)"$/,
-  async function (self: World, index: number, elementType: string, typeValue: string) {
-    await input.selectOptionFromDropdown(self, elementType, typeValue, index)
-  }
-);
 
 Then(
-  /^I select "(.*?)" option by (.+) from\s*((?:multiselect)?)\sdropdown having (.+) "(.*?)"$/,
-  async function (this: World, option: string, elementType: string, typeValue: string) {
-    await input.selectOptionFromDropdown(this, elementType, typeValue, option)
+  /^I select (.*?) option by (.+) from dropdown having (.+) "(.*?)"$/,
+  async function (this: World, option: string, optionType: string, elementType: string, typeValue: string) {
+    await input.selectOptionFromDropdown(this, elementType, typeValue, option, optionType)
   }
 );
-
 
 
 Then(
