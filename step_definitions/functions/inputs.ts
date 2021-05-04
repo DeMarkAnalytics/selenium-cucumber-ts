@@ -10,9 +10,12 @@ export async function clearText(self: World, elementType: string, typeValue: str
 }
 
 // by = index|text
-export async function selectOptionFromDropdown(self: World, elementType: string, typeValue: string, option: string|number) {
-    let dropdown = await self.driver.findElement(elementLocator(elementType, typeValue))
-    //TODO: finish dropdown interaction
+export async function selectOptionFromDropdown(self: World, elementType: string, typeValue: string, option: string|number, optionType:string = 'value') {
+    const xpathOption = optionType !== "index" ? `@${optionType}=${option}` : option;
+    let dropdown = await self.driver.findElement(elementLocator(elementType, typeValue));
+    dropdown.click();
+    let chosenOption = await self.driver.findElement(elementLocator('xpath', `//select[@${elementType}=\'${typeValue}\']/option[${xpathOption}]`))
+    chosenOption.click();
 }
 
 export async function selectAllOptionsFromMultiselectDropdown(self: World, elementType: string, typeValue: string) {
@@ -39,6 +42,12 @@ export async function uncheckCheckbox(self: World, elementType: string, typeValu
         checkbox.click()
     }
     //TODO: need checkbox checking test this may not work
+}
+
+export async function toggleCheckbox(self: World, elementType: string, typeValue: string) {
+  let checkbox = await self.driver.findElement(elementLocator(elementType, typeValue))
+    checkbox.click();
+  //TODO: need checkbox checking test
 }
 
 
