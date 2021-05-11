@@ -12,3 +12,9 @@ export async function waitForElementToDisplay(self: World, elementType: string, 
     +seconds
   )
 }
+
+export async function waitForElementToBeLocated(self: World, elementType: string, typeValue: string, seconds: number) {
+  await self.driver.wait(until.elementLocated(elementLocator(elementType, typeValue)),
+    +seconds
+  )
+}
