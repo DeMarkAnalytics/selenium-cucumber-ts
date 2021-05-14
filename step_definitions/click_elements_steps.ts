@@ -7,6 +7,7 @@ import * as mouse from "./functions/clicks"
 
 //TODO: add text parsing to this function
 When(
+  //TODO: add text parsing to this function
   /^I click on element having (id|name|class|xpath|css) "(.*?)"(?: and text "(.*?)")?$/,
   async function (this: World, elementType: string, typeValue: string, text: string) {
     validateLocater(elementType)
