@@ -2,6 +2,7 @@ import assert from "assert";
 import { By } from "selenium-webdriver";
 import { World } from "../world";
 import * as image from "./images";
+import { elementLocator } from "./elements"
 
 export async function getPageTitle(self: World) {
   return await self.driver.getTitle();
@@ -159,34 +160,6 @@ export async function checkAlertText(self: World, text: string) {
 
 export async function isImageSimilar(self: World, actualImageType: string, actualImageName: string, expectedImageType: string, expectedImageName: string) {
   await image.compare(self, actualImageType, actualImageName, expectedImageType, expectedImageName)
-}
-
-export function elementLocator(elementType: string, typeValue: string) {
-  let retValue = null;
-  switch (elementType) {
-    case "id":
-      retValue = { id: typeValue };
-      break;
-    case "name":
-      retValue = { name: typeValue };
-      break;
-    case "class":
-      retValue = { className: typeValue };
-      break;
-    case "xpath":
-      retValue = { xpath: typeValue };
-      break;
-    case "css":
-      retValue = { css: typeValue };
-      break;
-    case "link":
-      retValue = By.linkText(typeValue)
-      break;
-    case "partialLink":
-      retValue = By.partialLinkText(typeValue)
-      break;
-  }
-  return retValue;
 }
 
 // this is to take a string with special characters and escape them so they are not interpreted by regex

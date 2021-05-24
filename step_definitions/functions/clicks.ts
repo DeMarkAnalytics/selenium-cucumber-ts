@@ -1,5 +1,5 @@
 import { World } from "../world";
-import { elementLocator } from "./pageAssertions";
+import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress"
 
 export async function click(self: World, elementType: string, typeValue: string) {

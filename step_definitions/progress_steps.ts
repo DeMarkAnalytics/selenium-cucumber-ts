@@ -21,3 +21,10 @@ Then(
   async function (this: World, seconds: string, elementType: string, typeValue: string) {
   }
 );
+
+Then(
+  /^I (?:should\ )?wait (\d+) seconds for the page title to be "(.*?)"$/,
+  async function (this: World, seconds: string, titleMatch: string) {
+    progress.waitForTitleToBe(this, titleMatch, +seconds)
+  }
+);
