@@ -21,4 +21,4 @@ Feature: bdd tests for step defs
         #Then link having text "Google" should not be present
         Then I click on link having text "iPhone"
         And I should see page title as "iPhone - Apple"
-        And I should wait for 30 seconds
+        And I should wait for "30" seconds

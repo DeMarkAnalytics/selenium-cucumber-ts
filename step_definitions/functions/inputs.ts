@@ -1,5 +1,5 @@
 import { World } from "../world";
-import { elementLocator } from "./pageAssertions"
+import { elementLocator } from "./elements"
 
 export async function enterText(self: World, elementType: string, typeValue: string, text: string) {
     await (await self.driver).findElement(elementLocator(elementType, typeValue)).sendKeys(text)
