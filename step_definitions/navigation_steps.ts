@@ -1,23 +1,24 @@
 import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
+import * as navigate from "./functions/navigate"
 // keeping these all labeld as Then, although they should all be Whens
 // only keeping them Then as that's what they were labeled as in the ruby example:
 //https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/navigation_steps.rb
 
 Then(/^I navigate to "(.*)"$/, async function (this: World, url: string) {
-  await this.driver.get(url);
+  await navigate.navigateTo(this, url)
 });
 
 Then(/^I navigate forward"$/, async function (this: World) {
-  await this.driver.navigate().forward;
+  await navigate.navigate(this, 'forward')
 });
 
 Then(/^I navigate back"$/, async function (this: World) {
-  await this.driver.navigate().back;
+  await navigate.navigate(this, 'back')
 });
 
 Then(/^I close browser$/, async function (this: World) {
-  await this.driver.quit;
+  await navigate.closeDriver(this)
 });
 
 Then(
@@ -32,7 +33,7 @@ Then(/^I maximize browser window$/, async function (this: World) {
 });
 
 Then(/^I refresh page$/, async function (this: World) {
-  await this.driver.navigate().refresh();
+  await navigate.refreshPage(this)
 });
 
 Then(/^I switch to a new window$/, async function (this: World) {
@@ -76,7 +77,7 @@ Then(/^I scroll to (top|end) of page$/, async function (this: World, location: s
 });
 
 Then(/^I hover over element having (.*) "(.*?)"$/, async function (this: World, type: string, element: string) {
-  return "pending";
+  await navigate.hoverOverElement(this, type, element)
 });
 
 Then(/^I zoom in page$/, async function (this: World) {
