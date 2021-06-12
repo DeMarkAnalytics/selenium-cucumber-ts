@@ -48,7 +48,7 @@ export async function hoverOverElement(
       const element = await self.driver.findElement(
         elementLocator(elementType, typeValue)
       );
-      await self.driver.actions().mouseMove(element).perform;
+      await self.driver.actions().mouseMove(element).perform();
       break;
     } catch (x) {
       await self.driver.sleep(1000);

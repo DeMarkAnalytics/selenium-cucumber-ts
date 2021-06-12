@@ -1,6 +1,7 @@
 import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
 import * as input from "./functions/inputs"
+import { backspace, enter } from "./functions/keys";
 //https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/input_steps.rb
 
 Then(
@@ -68,3 +69,15 @@ Then(
 Then(/^I select "(.*?)" option by (.+) from radio button group having (.+) "(.*?)"$/, async function (this: World, elementType: string, typeValue: string, option: string) {
   await input.selectOptionFromRadioButtonGroup(this, elementType, typeValue, option);
 });
+
+Then(/^I send the key (enter|backspace) to the element having (.+) "(.+)"$/,
+  async function (this: World, key: string, elementType: string, typeValue: string) {
+    switch(key) {
+      case 'backspace':
+        backspace(this, elementType, typeValue)
+        break;
+      case 'enter':
+        enter(this, elementType, typeValue)
+        break;
+    }
+  })
