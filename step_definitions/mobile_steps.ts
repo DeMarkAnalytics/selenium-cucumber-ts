@@ -32,33 +32,21 @@ Then(/^I swipe down$/, async function (this: World) {
   return "pass";
 });
 
-Then(
-  /^I swipe element having (.+) "(.*?)" to right$/,
-  async function (this: World, elementType: string, typeValue: string) {
-    return "pass";
-  }
-);
+Then(/^I swipe element having (.+) "(.*?)" to right$/, async function (this: World, elementType: string, typeValue: string) {
+  return "pass";
+});
 
-Then(
-  /^I swipe element having (.+) "(.*?)" to left$/,
-  async function (this: World, elementType: string, typeValue: string) {
-    return "pass";
-  }
-);
+Then(/^I swipe element having (.+) "(.*?)" to left$/, async function (this: World, elementType: string, typeValue: string) {
+  return "pass";
+});
 
-Then(
-  /^I swipe element having (.+) "(.*?)" to up$/,
-  async function (this: World, elementType: string, typeValue: string) {
-    return "pass";
-  }
-);
+Then(/^I swipe element having (.+) "(.*?)" to up$/, async function (this: World, elementType: string, typeValue: string) {
+  return "pass";
+});
 
-Then(
-  /^I swipe element having (.+) "(.*?)" to down$/,
-  async function (this: World, elementType: string, typeValue: string) {
-    return "pass";
-  }
-);
+Then(/^I swipe element having (.+) "(.*?)" to down$/, async function (this: World, elementType: string, typeValue: string) {
+  return "pass";
+});
 
 Then(/^I swipe co\-ordinates "(.*?)","(.*?)" to left$/, async function (this: World, x: string, y: string) {
   return "pass";
@@ -76,30 +64,21 @@ Then(/^I swipe co\-ordinates "(.*?)","(.*?)" to down$/, async function (this: Wo
   return "pass";
 });
 
-Then(
-  /^I long tap on element having (.+) "(.*?)"$/,
-  async function (this: World, elementType: string, typeValue: string) {
-    return "pass";
-  }
-);
+Then(/^I long tap on element having (.+) "(.*?)"$/, async function (this: World, elementType: string, typeValue: string) {
+  return "pass";
+});
 
-Then(
-  /^I long tap on element having (.+) "(.*?)" for "(.*?)" sec$/,
-  async function (this: World, elementType: string, typeValue: string, seconds: string) {
-    return "pass";
-  }
-);
+Then(/^I long tap on element having (.+) "(.*?)" for "(.*?)" sec$/, async function (this: World, elementType: string, typeValue: string, seconds: string) {
+  return "pass";
+});
 
 Then(/^I long tap on co\-ordinate "(.*?)","(.*?)"$/, async function (this: World, x: string, y: string) {
   return "pass";
 });
 
-Then(
-  /^I long tap on co\-ordinate "(.*?)","(.*?)" for "(.*?)" sec$/,
-  async function (this: World, x: string, y: string, seconds: string) {
-    return "pass";
-  }
-);
+Then(/^I long tap on co\-ordinate "(.*?)","(.*?)" for "(.*?)" sec$/, async function (this: World, x: string, y: string, seconds: string) {
+  return "pass";
+});
 
 Then(/^I close app$/, async function (this: World) {
   return "pass";

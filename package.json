@@ -1,6 +1,6 @@
 {
   "name": "@symbolik/selenium-cucumber-ts",
-  "version": "1.0.8-SNAPSHOT.4",
+  "version": "1.0.8-SNAPSHOT.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,6 @@
   },
   "peerDependencies": {
     "@cucumber/cucumber": "^7.2.1",
-    "selenium-webdriver": "^4.0.0-beta.4jj"
+    "selenium-webdriver": "^4.0.0-beta.4"
   }
 }

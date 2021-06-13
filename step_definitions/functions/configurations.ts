@@ -17,12 +17,8 @@ export async function printConfiguration(self: World) {
 }
 
 async function printDesktopConfig(self: World) {
-  console.info(
-    `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`
-  );
-  console.info(
-    `Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`
-  );
+  console.info(`Platform : ${(await self.driver.getCapabilities()).getPlatform()}`);
+  console.info(`Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`);
   console.info("");
 }
 

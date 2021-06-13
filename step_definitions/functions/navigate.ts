@@ -15,7 +15,7 @@ export async function navigate(self: World, direction: string) {
 }
 
 export async function closeDriver(self: World) {
-  await self.driver.quit;
+  self.driver.quit;
 }
 
 export async function refreshPage(self: World) {
@@ -23,9 +23,7 @@ export async function refreshPage(self: World) {
 }
 
 export async function getKey(self: World) {
-  const os = await (await self.driver.getCapabilities())
-    .getPlatform()
-    .toUpperCase();
+  const os = await (await self.driver.getCapabilities()).getPlatform().toUpperCase();
   if (os === "WINDOWS" || os === "LINUX") {
     return "control";
   } else if (os === "DARWIN") {
@@ -37,17 +35,11 @@ export async function getKey(self: World) {
   }
 }
 
-export async function hoverOverElement(
-  self: World,
-  elementType: string,
-  typeValue: string
-) {
+export async function hoverOverElement(self: World, elementType: string, typeValue: string) {
   for (var retry = 1; retry <= 10; retry++) {
     try {
       await waitForElementToBeLocated(self, elementType, typeValue, 60000);
-      const element = await self.driver.findElement(
-        elementLocator(elementType, typeValue)
-      );
+      const element = await self.driver.findElement(elementLocator(elementType, typeValue));
       await self.driver.actions().mouseMove(element).perform();
       break;
     } catch (x) {
