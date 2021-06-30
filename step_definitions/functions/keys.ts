@@ -5,7 +5,7 @@ import { waitForElementToBeLocated } from "./progress";
 
 export async function backspace(self: World, elementType: string, typeValue: string) {
   await waitForElementToBeLocated(self, elementType, typeValue, 60000);
-  for (var retry = 1; retry <= 10; retry++) {
+  for (var retry = 1; retry <= 2; retry++) {
     try {
       await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.BACK_SPACE);
       break;
@@ -17,7 +17,7 @@ export async function backspace(self: World, elementType: string, typeValue: str
 
 export async function enter(self: World, elementType: string, typeValue: string) {
   await waitForElementToBeLocated(self, elementType, typeValue, 60000);
-  for (var retry = 1; retry <= 10; retry++) {
+  for (var retry = 1; retry <= 2; retry++) {
     try {
       await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.BACK_SPACE);
       break;
