@@ -1,12 +1,18 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
+import { Key } from "selenium-webdriver";
 
 export async function enterText(self: World, elementType: string, typeValue: string, text: string) {
   await (await self.driver).findElement(elementLocator(elementType, typeValue)).sendKeys(text);
 }
 
 export async function clearText(self: World, elementType: string, typeValue: string) {
-  await (await self.driver).findElement(elementLocator(elementType, typeValue)).clear();
+  await self.driver.findElement(elementLocator(elementType, typeValue)).clear();
+  // clear() doesn't work in all browsers
+  // https://stackoverflow.com/questions/7732125/clear-text-from-textarea-with-selenium
+  await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.CONTROL + 'a')
+  await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.DELETE)
+
 }
 
 // by = index|text
