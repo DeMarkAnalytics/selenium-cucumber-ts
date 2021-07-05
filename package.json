@@ -1,6 +1,6 @@
 {
   "name": "@symbolik/selenium-cucumber-ts",
-  "version": "1.0.8-NSAPSHOT.9",
+  "version": "1.0.8",
   "description": "",
   "main": "index.js",
   "scripts": {
