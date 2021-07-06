@@ -22,7 +22,7 @@ export async function refreshPage(self: World) {
   await self.driver.navigate().refresh();
 }
 
-export async function getKey(self: World) {
+export async function getSystemModifierKey(self: World) {
   const os = await (await self.driver.getCapabilities()).getPlatform().toUpperCase();
   if (os === "WINDOWS" || os === "LINUX") {
     return "control";
