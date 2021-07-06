@@ -19,10 +19,10 @@ export function elementLocator(elementType: string, typeValue: string) {
       retValue = { css: typeValue };
       break;
     case "link":
-      retValue = By.linkText(typeValue)
+      retValue = By.linkText(typeValue);
       break;
     case "partialLink":
-      retValue = By.partialLinkText(typeValue)
+      retValue = By.partialLinkText(typeValue);
       break;
   }
   return retValue;
