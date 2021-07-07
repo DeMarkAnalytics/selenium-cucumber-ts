@@ -1,6 +1,6 @@
 {
   "name": "@symbolik/selenium-cucumber-ts",
-  "version": "1.0.8",
+  "version": "1.0.9-PR9.1",
   "description": "",
   "main": "index.js",
   "scripts": {
