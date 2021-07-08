@@ -1,5 +1,6 @@
 export * from "./step_definitions/functions/clicks";
 export * from "./step_definitions/functions/configurations";
+export * from "./step_definitions/functions/debug";
 export * from "./step_definitions/functions/elements";
 export * from "./step_definitions/functions/images";
 export * from "./step_definitions/functions/inputs";
