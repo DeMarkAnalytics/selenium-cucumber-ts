@@ -1,5 +1,5 @@
 import { World } from "../world";
-import { debugLog } from "./debug";
+let debugLog = require('debug')('configurations')
 
 export async function printConfiguration(self: World) {
   debugLog("Printing configuration")

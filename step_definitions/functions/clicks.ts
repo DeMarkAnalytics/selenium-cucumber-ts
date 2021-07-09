@@ -1,6 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
+import {debug} as factory from 'debug'
 import { debugLog } from "./debug"
 
 export async function click(self: World, elementType: string, typeValue: string) {

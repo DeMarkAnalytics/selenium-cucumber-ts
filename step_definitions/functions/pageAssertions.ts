@@ -2,7 +2,7 @@ import assert from "assert";
 import { World } from "../world";
 import * as image from "./images";
 import { elementLocator } from "./elements";
-import { debugLog } from "./debug";
+let debugLog = require('debug')('assertions')
 
 export async function getPageTitle(self: World) {
   return await self.driver.getTitle();

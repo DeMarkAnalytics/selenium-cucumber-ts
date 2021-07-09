@@ -1,7 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
-import { debugLog } from "./debug";
 import { until } from "selenium-webdriver";
+let debugLog = require('debug')('progress')
 
 export async function wait(self: World, seconds: number) {
   debugLog(`waiting ${seconds}`)

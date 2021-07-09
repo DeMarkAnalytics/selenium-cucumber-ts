@@ -1,8 +1,8 @@
 import { World } from "../world";
 import { Key } from "selenium-webdriver";
 import { elementLocator } from "./elements";
-import { debugLog } from "./debug";
 import { waitForElementToBeLocated } from "./progress";
+let debugLog = require('debug')('keys')
 
 export async function backspace(self: World, elementType: string, typeValue: string) {
   debugLog(`sending backspace to ${elementType} ${typeValue}`)

@@ -1,7 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
-import { debugLog } from "./debug";
 import { waitForElementToBeLocated } from "./progress";
+let debugLog = require('debug')('navigate')
 
 export async function navigateTo(self: World, url: string) {
   await self.driver.get(url);
