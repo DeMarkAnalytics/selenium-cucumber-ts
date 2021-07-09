@@ -1,7 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
 import { Key } from "selenium-webdriver";
-let debugLog = require('debug')('inpurts')
+let debugLog = require('debug')('inputs')
 
 export async function enterText(self: World, elementType: string, typeValue: string, text: string) {
   debugLog(`Entering text into ${elementType} ${typeValue}`)
