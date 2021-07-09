@@ -1,6 +1,8 @@
 import { World } from "../world";
+let debugLog = require('debug')('configurations')
 
 export async function printConfiguration(self: World) {
+  debugLog("Printing configuration")
   const date = new Date();
   const capibilities = await self.driver.getCapabilities();
   console.info("");
@@ -17,6 +19,7 @@ export async function printConfiguration(self: World) {
 }
 
 async function printDesktopConfig(self: World) {
+  debugLog("printing desktop config")
   console.info(`Platform : ${(await self.driver.getCapabilities()).getPlatform()}`);
   console.info(`Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`);
   console.info("");

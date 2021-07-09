@@ -1,6 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
+let debugLog = require('debug')('navigate')
 
 export async function navigateTo(self: World, url: string) {
   await self.driver.get(url);
@@ -8,17 +9,21 @@ export async function navigateTo(self: World, url: string) {
 
 export async function navigate(self: World, direction: string) {
   if (direction === "back") {
+    debugLog('pressing back button')
     await self.driver.navigate().back();
   } else {
+    debugLog('pressing forward button')
     await self.driver.navigate().forward();
   }
 }
 
 export async function closeDriver(self: World) {
+  debugLog('shutting down')
   self.driver.quit;
 }
 
 export async function refreshPage(self: World) {
+  debugLog('refresh')
   await self.driver.navigate().refresh();
 }
 
@@ -36,6 +41,7 @@ export async function getSystemModifierKey(self: World) {
 }
 
 export async function hoverOverElement(self: World, elementType: string, typeValue: string) {
+  debugLog(`hovering over ${elementType} ${typeValue}`)
   for (var retry = 1; retry <= 2; retry++) {
     try {
       await waitForElementToBeLocated(self, elementType, typeValue, 60000);
