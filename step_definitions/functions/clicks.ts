@@ -1,8 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
-import {debug} as factory from 'debug'
-import { debugLog } from "./debug"
+let debugLog = require('debug')('clicks')
 
 export async function click(self: World, elementType: string, typeValue: string) {
   debugLog(`trying to click on ${elementType} ${typeValue}`)
