@@ -13,8 +13,6 @@ Feature: website assertions
 
   @assertion @elementText
   Scenario: locating items
-    Given I navigate to "http://the-internet.herokuapp.com/challenging_dom"
-    Then element having id "e4c97690-c640-0139-01e5-3afd003b8732" should have text as "foo"
-    Then element having id "e4c97690-c640-0139-01e5-3afd003b8732" should not have text as "qux"
-    Then element having class "button" should have text as "foo"
-    Then element having class "button" should not have text as "qux"
+    Given I navigate to "http://the-internet.herokuapp.com/add_remove_elements/"
+    Then button having xpath "//button[text()='Add Element']" should have text as "Add Element"
+    Then button having xpath "//button[text()='Add Element']" should not have text as "Remove Element"
