@@ -1,12 +1,13 @@
 {
   "name": "@symbolik/selenium-cucumber-ts",
-  "version": "1.0.9",
+  "version": "1.0.10",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build-local": "tsc -p tsconfig.node.json",
     "prefeature-test": "yarn run build-local",
-    "test": "mkdir -p ../reports; ./node_modules/.bin/cucumber-js -f @cucumber/pretty-formatter -f usage:../reports/BDD_Usage_report-$(date +%s).txt"
+    "cucumber": "mkdir -p ./reports; ./node_modules/.bin/cucumber-js -f @cucumber/pretty-formatter -f json:./reports/BDD_Usage_report-$(date +%s).json",
+    "test": "yarn cucumber"
   },
   "publishConfig": {
     "registry": "https://artifactory.marketstudies.com/artifactory/api/npm/npm-local/"
@@ -22,18 +23,21 @@
   },
   "homepage": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts#readme",
   "devDependencies": {
-    "@cucumber/cucumber": "^7.2.1",
-    "@cucumber/pretty-formatter": "^1.0.0-alpha.0",
-    "@types/selenium-webdriver": "^4.0.13",
+    "@cucumber/cucumber": "^7.3.1",
+    "@cucumber/pretty-formatter": "^1.0.0-alpha.1",
+    "@types/selenium-webdriver": "^4.0.15",
+    "chromedriver": "^92.0.1",
+    "geckodriver": "^2.0.1",
     "selenium-webdriver": "^4.0.0-beta.4",
-    "ts-node": "^10.0.0",
-    "typescript": "^4.3.2"
+    "ts-node": "^10.1.0",
+    "typescript": "^4.3.5"
   },
   "peerDependencies": {
-    "@cucumber/cucumber": "^7.2.1",
+    "@cucumber/cucumber": "^7.3.1",
     "selenium-webdriver": "^4.0.0-beta.4"
   },
   "dependencies": {
+    "@types/node": "^16.4.10",
     "debug": "^4.3.2"
   }
 }

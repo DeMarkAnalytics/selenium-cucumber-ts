@@ -22,3 +22,10 @@ export async function waitForTitleToBe(self: World, titleMatch: string, seconds:
   debugLog(`waiting ${seconds} for title to be ${titleMatch}`)
   await self.driver.wait(until.titleIs(titleMatch), +seconds * 1000);
 }
+
+export async function getElementsCount(self: World, elementType: string, typeValue: string): Promise<number> {
+  debugLog(`looking for ${elementType}: "${typeValue}"`)
+  let elementCount = (await self.driver.findElements(elementLocator(elementType, typeValue))).length;
+  debugLog(`found ${elementCount} total`)
+  return elementCount
+}
