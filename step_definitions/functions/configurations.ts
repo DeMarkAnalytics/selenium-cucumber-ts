@@ -26,7 +26,6 @@ async function printDesktopConfig(self: World) {
 }
 
 // TODO: implement mobile platform items
-// https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/methods/configuration_methods.rb#L4
 async function printMobileConfig(self: World) {
   console.info("");
 }
