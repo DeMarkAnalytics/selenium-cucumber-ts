@@ -24,7 +24,7 @@
   "homepage": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts#readme",
   "devDependencies": {
     "@cucumber/pretty-formatter": "^1.0.0-alpha.1",
-    "@types/node": "^16.4.10",
+    "@types/node": "^16.6.0",
     "@types/selenium-webdriver": "^4.0.15",
     "chromedriver": "^92.0.1",
     "geckodriver": "^2.0.1",
