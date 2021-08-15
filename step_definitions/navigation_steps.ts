@@ -6,11 +6,11 @@ Then(/^I navigate to "(.*)"$/, async function (this: World, url: string) {
   await navigate.navigateTo(this, url);
 });
 
-Then(/^I navigate forward"$/, async function (this: World) {
+Then(/^I navigate forward$/, async function (this: World) {
   await navigate.navigate(this, "forward");
 });
 
-Then(/^I navigate back"$/, async function (this: World) {
+Then(/^I navigate back$/, async function (this: World) {
   await navigate.navigate(this, "back");
 });
 
