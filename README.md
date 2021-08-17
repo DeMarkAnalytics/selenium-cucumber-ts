@@ -3,7 +3,7 @@
 Idea from this ruby project and ported to typescript:
    https://github.com/selenium-cucumber/selenium-cucumber-ruby
 
-Not all steps are implemented but there are enought implemented to be very useful.
+Not all steps are implemented but there are enough implemented to be very useful.
 
 ## how to use:
 Add to your project
