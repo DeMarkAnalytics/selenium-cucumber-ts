@@ -2,10 +2,10 @@ import { World } from "../world";
 import { Key } from "selenium-webdriver";
 import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
-let debugLog = require('debug')('keys')
+let debugLog = require("debug")("keys");
 
 export async function backspace(self: World, elementType: string, typeValue: string) {
-  debugLog(`sending backspace to ${elementType} ${typeValue}`)
+  debugLog(`sending backspace to ${elementType} ${typeValue}`);
   await waitForElementToBeLocated(self, elementType, typeValue, 60000);
   for (var retry = 1; retry <= 2; retry++) {
     try {
@@ -18,7 +18,7 @@ export async function backspace(self: World, elementType: string, typeValue: str
 }
 
 export async function enter(self: World, elementType: string, typeValue: string) {
-  debugLog(`sending enter to ${elementType} ${typeValue}`)
+  debugLog(`sending enter to ${elementType} ${typeValue}`);
   await waitForElementToBeLocated(self, elementType, typeValue, 60000);
   for (var retry = 1; retry <= 2; retry++) {
     try {
