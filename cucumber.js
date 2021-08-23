@@ -5,10 +5,9 @@ const feature = [
   "--require features/**/*.ts",
   "--require step_definitions/**/*.ts",
   `--format ${process.env.CI || !process.stdout.isTTY ? "progress" : "progress-bar"}`,
-  "--format rerun:@rerun.txt",
-  "--format usage:usage.txt",
-  "--format message:messages.ndjson",
+  "--format usage:reports/usage.txt",
   "--publish-quiet",
+  '--tags "not @disabled"',
 ].join(" ");
 
 module.exports = {

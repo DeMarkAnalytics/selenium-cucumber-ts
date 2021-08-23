@@ -2,7 +2,6 @@ import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
 import * as input from "./functions/inputs";
 import { backspace, enter } from "./functions/keys";
-//https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/input_steps.rb
 
 Then(/^I enter "([^\"]*)" into input field having (.+) "([^\"]*)"$/, async function (this: World, text: string, elementType: string, typeValue: string) {
   await input.enterText(this, elementType, typeValue, text);

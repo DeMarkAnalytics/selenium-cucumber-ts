@@ -1,6 +1,5 @@
 {
     "cucumberautocomplete.steps": [
-        "features/step_definitions/**/*_steps.ts",
         "step_definitions/**/*steps.ts"
     ],
     "cucumberautocomplete.smartSnippets": true,

@@ -2,7 +2,7 @@ import assert from "assert";
 import { World } from "../world";
 import * as image from "./images";
 import { elementLocator } from "./elements";
-let debugLog = require('debug')('assertions')
+let debugLog = require("debug")("assertions");
 
 export async function getPageTitle(self: World) {
   return await self.driver.getTitle();
@@ -10,7 +10,7 @@ export async function getPageTitle(self: World) {
 
 export async function checkTitle(self: World, expected: string, negate: string) {
   const pageTitle = await getPageTitle(self);
-  debugLog(`checking ${pageTitle} is equal ${expected}`)
+  debugLog(`checking ${pageTitle} is equal ${expected}`);
   if (negate === null) {
     assert.strictEqual(pageTitle, expected);
   } else {
@@ -20,7 +20,7 @@ export async function checkTitle(self: World, expected: string, negate: string) 
 
 export async function checkPartialTitle(self: World, expected: string, negate: string) {
   const pageTitle = await getPageTitle(self);
-  debugLog(`checking ${pageTitle} is close to ${expected}`)
+  debugLog(`checking ${pageTitle} is close to ${expected}`);
 
   if (negate === null) {
     assert.match(pageTitle, new RegExp(`.*${escapeRegExp(expected)}.*`));
@@ -30,12 +30,12 @@ export async function checkPartialTitle(self: World, expected: string, negate: s
 }
 
 export async function getElementText(self: World, elementType: string, typeValue: string) {
-  debugLog(`getting text of ${elementType} ${typeValue}`)
+  debugLog(`getting text of ${elementType} ${typeValue}`);
   return await self.driver.findElement(elementLocator(elementType, typeValue)).getText();
 }
 
 export async function checkElementText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string) {
-  debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`)
+  debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
   const elementText = await getElementText(self, elementType, typeValue);
 
   if (negate === null) {
@@ -46,7 +46,7 @@ export async function checkElementText(self: World, elementType: string, typeVal
 }
 
 export async function checkElementPartialText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string) {
-  debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`)
+  debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
   const elementText = await getElementText(self, elementType, typeValue);
 
   if (negate === null) {
@@ -57,7 +57,7 @@ export async function checkElementPartialText(self: World, elementType: string, 
 }
 
 export async function checkElementAttribute(self: World, elementType: string, typeValue: string, hasType: string, hasTypeValue: string, negate: string) {
-  debugLog(`checking if ${elementType} ${typeValue} has element ${hasType} ${hasTypeValue} `)
+  debugLog(`checking if ${elementType} ${typeValue} has element ${hasType} ${hasTypeValue} `);
   const attributeValue = await getElementAttribute(self, elementType, typeValue, hasType);
 
   if (negate === null) {
@@ -68,7 +68,7 @@ export async function checkElementAttribute(self: World, elementType: string, ty
 }
 
 export async function checkElementEnable(self: World, elementType: string, typeValue: string, status: string, negate: string) {
-  debugLog(`checking element enabled status ${elementType} ${typeValue}`)
+  debugLog(`checking element enabled status ${elementType} ${typeValue}`);
   const elementStatus = await self.driver.findElement(elementLocator(elementType, typeValue)).isEnabled();
 
   if (negate === null) {
@@ -87,12 +87,12 @@ export async function checkElementEnable(self: World, elementType: string, typeV
 }
 
 export async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
-  debugLog(`checking element displayed status ${elementType} ${typeValue}`)
+  debugLog(`checking element displayed status ${elementType} ${typeValue}`);
   return await self.driver.findElement(elementLocator(elementType, typeValue)).isDisplayed();
 }
 
 export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate: string) {
-  debugLog(`checking element presence status ${elementType} ${typeValue}`)
+  debugLog(`checking element presence status ${elementType} ${typeValue}`);
   if (negate === null) {
     assert(await isElementDisplayed(self, elementType, typeValue));
   } else {
@@ -111,7 +111,7 @@ export function validateLocater(locator: string) {
 }
 
 export async function isCheckboxChecked(self: World, elementType: string, typeValue: string, state: string) {
-  debugLog(`checking checkbox status ${elementType} ${typeValue}`)
+  debugLog(`checking checkbox status ${elementType} ${typeValue}`);
   if (state === "checked") {
     assert(await (await self.driver.findElement(elementLocator(elementType, typeValue))).isSelected());
   } else if (state === "unchecked") {
@@ -120,7 +120,7 @@ export async function isCheckboxChecked(self: World, elementType: string, typeVa
 }
 
 export async function isRadioButtonSelected(self: World, elementType: string, typeValue: string, state: string) {
-  debugLog(`checking radio button status ${elementType} ${typeValue}`)
+  debugLog(`checking radio button status ${elementType} ${typeValue}`);
   if (state === "selected") {
     assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected());
   } else if (state === "unselected") {
@@ -136,7 +136,7 @@ export async function isOptionFromDropDownSelected(
   optionAttribute: string,
   state: string
 ) {
-  debugLog(`checking option from dropdown status ${elementType} ${typeValue}`)
+  debugLog(`checking option from dropdown status ${elementType} ${typeValue}`);
   if (state === "selected") {
     assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected());
   } else if (state === "unselected") {
@@ -151,7 +151,7 @@ export async function isOptionFromRadioButtonGroupSelected(
   optionAttribute: string,
   state: string
 ) {
-  debugLog(`checking option from radio group status ${elementType} ${typeValue}`)
+  debugLog(`checking option from radio group status ${elementType} ${typeValue}`);
   //how to navigate radio buttons???
   return "pending";
 }
@@ -167,7 +167,7 @@ export async function checkAlertText(self: World, text: string) {
 }
 
 export async function isImageSimilar(self: World, actualImageType: string, actualImageName: string, expectedImageType: string, expectedImageName: string) {
-  debugLog('comparing images')
+  debugLog("comparing images");
   await image.compare(self, actualImageType, actualImageName, expectedImageType, expectedImageName);
 }
 

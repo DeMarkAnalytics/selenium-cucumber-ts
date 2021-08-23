@@ -1,8 +1,8 @@
 import { World } from "../world";
-let debugLog = require('debug')('configurations')
+let debugLog = require("debug")("configurations");
 
 export async function printConfiguration(self: World) {
-  debugLog("Printing configuration")
+  debugLog("Printing configuration");
   const date = new Date();
   const capibilities = await self.driver.getCapabilities();
   console.info("");
@@ -19,14 +19,13 @@ export async function printConfiguration(self: World) {
 }
 
 async function printDesktopConfig(self: World) {
-  debugLog("printing desktop config")
+  debugLog("printing desktop config");
   console.info(`Platform : ${(await self.driver.getCapabilities()).getPlatform()}`);
   console.info(`Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`);
   console.info("");
 }
 
 // TODO: implement mobile platform items
-// https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/methods/configuration_methods.rb#L4
 async function printMobileConfig(self: World) {
   console.info("");
 }

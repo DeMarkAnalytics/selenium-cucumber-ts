@@ -1,19 +1,16 @@
 import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
 import * as navigate from "./functions/navigate";
-// keeping these all labeld as Then, although they should all be Whens
-// only keeping them Then as that's what they were labeled as in the ruby example:
-//https://github.com/selenium-cucumber/selenium-cucumber-ruby/blob/1f21a470db8e8655746efd5466783d9e09955df1/lib/selenium-cucumber/navigation_steps.rb
 
 Then(/^I navigate to "(.*)"$/, async function (this: World, url: string) {
   await navigate.navigateTo(this, url);
 });
 
-Then(/^I navigate forward"$/, async function (this: World) {
+Then(/^I navigate forward$/, async function (this: World) {
   await navigate.navigate(this, "forward");
 });
 
-Then(/^I navigate back"$/, async function (this: World) {
+Then(/^I navigate back$/, async function (this: World) {
   await navigate.navigate(this, "back");
 });
 
