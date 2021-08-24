@@ -1,6 +1,6 @@
 # cucumber-selenium-typescript
 
-Idea from this ruby project and ported to typescript:
+Idea originally from this ruby project and ported to typescript:
 <https://github.com/selenium-cucumber/selenium-cucumber-ruby>
 
 Not all steps are implemented but there are enough implemented to be very useful.
