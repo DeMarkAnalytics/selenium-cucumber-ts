@@ -11,6 +11,7 @@ chromeOptions.addArguments("--ignore-certificate-errors");
 chromeOptions.addArguments("--allow-running-insecure-content");
 chromeOptions.addArguments("--disable-extensions");
 chromeOptions.addArguments("--start-maximized");
+chromeOptions.addArguments("--headless");
 
 //export class World implements selcucWorld implements restWorld {
 export class World implements selcucWorld {
