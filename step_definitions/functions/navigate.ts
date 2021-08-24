@@ -55,3 +55,11 @@ export async function hoverOverElement(self: World, elementType: string, typeVal
     }
   }
 }
+
+export async function setWindowSize(self: World, width: number, height: number) {
+  await self.driver.manage().window().setRect({ x: 0, y: 0, width: width, height: height });
+}
+
+export async function maximizeWindow(self: World) {
+  await self.driver.manage().window().maximize();
+}
