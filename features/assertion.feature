@@ -56,6 +56,7 @@ Feature: website assertions
     Given I navigate to "http://the-internet.herokuapp.com/dropdown"
     And I should wait for "5" seconds
     When I select 1 option by value from dropdown having id "dropdown"
+    And I should wait for "5" seconds
     Then option "1" by value from dropdown having id "dropdown" should be selected
     Then option "2" by value from dropdown having id "dropdown" should be unselected
     And I should wait for "5" seconds
