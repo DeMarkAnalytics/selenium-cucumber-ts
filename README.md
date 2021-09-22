@@ -1,4 +1,3 @@
-[![Build Status](https://app.travis-ci.com/DeMarkAnalytics/selenium-cucumber-ts.svg?branch=main)](https://app.travis-ci.com/DeMarkAnalytics/selenium-cucumber-ts)
 # cucumber-selenium-typescript
 
 Idea originally from this ruby project and ported to typescript:
