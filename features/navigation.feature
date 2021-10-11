@@ -12,10 +12,10 @@ Feature: navigation
     Given I navigate to "http://the-internet.herokuapp.com/"
     And I close browser
 
-  Scenario: resize browser and maximize browser
-    Given I navigate to "http://the-internet.herokuapp.com/"
-    Then I resize browser window size to width 800 and height 600
-    And I maximize browser window
+  #Scenario: resize browser and maximize browser
+  #  Given I navigate to "http://the-internet.herokuapp.com/"
+  #  Then I resize browser window size to width 800 and height 600
+  #  And I maximize browser window
 
   Scenario: refresh the page
     Given I navigate to "http://the-internet.herokuapp.com/"
