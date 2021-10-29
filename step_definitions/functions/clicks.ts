@@ -23,7 +23,7 @@ export async function doubleClick(self: World, elementType: string, typeValue: s
     try {
       await waitForElementToBeLocated(self, elementType, typeValue, 60);
       let doubleClickElement = await self.driver.findElement(elementLocator(elementType, typeValue));
-      self.driver.actions().doubleClick(doubleClickElement);
+      await self.driver.actions().doubleClick(doubleClickElement).perform();
       break;
     } catch (x) {
       debugLog(`retrying to doubleClick on ${elementType} ${typeValue}`);
@@ -38,7 +38,7 @@ export async function rightClick(self: World, elementType: string, typeValue: st
     try {
       await waitForElementToBeLocated(self, elementType, typeValue, 60);
       let rightClickElement = await self.driver.findElement(elementLocator(elementType, typeValue));
-      self.driver.actions().contextClick(rightClickElement);
+      await self.driver.actions().contextClick(rightClickElement).perform();
       break;
     } catch (x) {
       debugLog(`retrying to rightClick on ${elementType} ${typeValue}`);
@@ -53,7 +53,7 @@ export async function clickForcefully(self: World, elementType: string, typeValu
     try {
       await waitForElementToBeLocated(self, elementType, typeValue, 60);
       let forceClickElement = await self.driver.findElement(elementLocator(elementType, typeValue));
-      self.driver.executeScript("arguments[0]click();", forceClickElement);
+      await self.driver.executeScript("arguments[0]click();", forceClickElement);
       break;
     } catch (x) {
       debugLog(`retrying to clickForcefully on ${elementType} ${typeValue}`);
