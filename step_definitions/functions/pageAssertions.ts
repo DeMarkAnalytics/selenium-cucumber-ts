@@ -88,7 +88,14 @@ export async function checkElementEnable(self: World, elementType: string, typeV
 
 export async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
   debugLog(`checking element displayed status ${elementType} ${typeValue}`);
-  return await self.driver.findElement(elementLocator(elementType, typeValue)).isDisplayed();
+  let elements = await self.driver.findElements(elementLocator(elementType, typeValue));
+  if ( elements.length === 1 ) {
+    return elements[0].isDisplayed();
+  } else if ( elements.length === 0 ) {
+    return false
+  } else {
+    throw new Error(`Found more than one element for ${elementType} ${typeValue}`);
+  }
 }
 
 export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate: string) {
