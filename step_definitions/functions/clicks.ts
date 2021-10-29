@@ -7,7 +7,7 @@ export async function click(self: World, elementType: string, typeValue: string)
   debugLog(`trying to click on ${elementType} ${typeValue}`);
   for (var retry = 1; retry <= 2; retry++) {
     try {
-      await waitForElementToBeLocated(self, elementType, typeValue, 60000);
+      await waitForElementToBeLocated(self, elementType, typeValue, 60);
       await self.driver.findElement(elementLocator(elementType, typeValue)).click();
       break;
     } catch (x) {
@@ -21,7 +21,7 @@ export async function doubleClick(self: World, elementType: string, typeValue: s
   debugLog(`trying to doubleClick on ${elementType} ${typeValue}`);
   for (var retry = 1; retry <= 2; retry++) {
     try {
-      await waitForElementToBeLocated(self, elementType, typeValue, 60000);
+      await waitForElementToBeLocated(self, elementType, typeValue, 60);
       let doubleClickElement = await self.driver.findElement(elementLocator(elementType, typeValue));
       await self.driver.actions().doubleClick(doubleClickElement).perform();
       break;
@@ -36,7 +36,7 @@ export async function rightClick(self: World, elementType: string, typeValue: st
   debugLog(`trying to rightClick on ${elementType} ${typeValue}`);
   for (var retry = 1; retry <= 2; retry++) {
     try {
-      await waitForElementToBeLocated(self, elementType, typeValue, 60000);
+      await waitForElementToBeLocated(self, elementType, typeValue, 60);
       let rightClickElement = await self.driver.findElement(elementLocator(elementType, typeValue));
       await self.driver.actions().contextClick(rightClickElement).perform();
       break;
@@ -51,7 +51,7 @@ export async function clickForcefully(self: World, elementType: string, typeValu
   debugLog(`trying to clickForcefully on ${elementType} ${typeValue}`);
   for (var retry = 1; retry <= 2; retry++) {
     try {
-      await waitForElementToBeLocated(self, elementType, typeValue, 60000);
+      await waitForElementToBeLocated(self, elementType, typeValue, 60);
       let forceClickElement = await self.driver.findElement(elementLocator(elementType, typeValue));
       await self.driver.executeScript("arguments[0]click();", forceClickElement);
       break;
@@ -66,7 +66,7 @@ export async function submit(self: World, elementType: string, typeValue: string
   debugLog(`trying to submit ${elementType} ${typeValue}`);
   for (var retry = 1; retry <= 2; retry++) {
     try {
-      await waitForElementToBeLocated(self, elementType, typeValue, 60000);
+      await waitForElementToBeLocated(self, elementType, typeValue, 60);
       await self.driver.findElement(elementLocator(elementType, typeValue)).submit();
       break;
     } catch (x) {

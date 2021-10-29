@@ -19,12 +19,12 @@ Feature: website assertions
     Then button having xpath "//button[text()='Add Element']" should have partial text as "Add"
     Then button having xpath "//button[text()='Add Element']" should not have partial text as "Remove"
 
-  @assertion @attributes
-  Scenario: element attributes
-    Given I navigate to "http://the-internet.herokuapp.com/login"
-    Then element having id "username" should have attribute "name" with value "username"
-    And element having id "password" should not have attribute "name" with value "username"
-    And button having class "radius" should have attribute "type" with value "submit"
+  #@assertion @attributes
+  #Scenario: element attributes
+  #  Given I navigate to "http://the-internet.herokuapp.com/login"
+  #  Then element having id "username" should have attribute "name" with value "username"
+  #  And element having id "password" should not have attribute "name" with value "username"
+  #  And button having class "radius" should have attribute "type" with value "submit"
 
   @assertion @presence
   Scenario: element presence
@@ -51,16 +51,16 @@ Feature: website assertions
     When I click on button having xpath "//button[text()='Click for JS Alert']"
     Then I should see alert text as "I am a JS Alert"
 
-  @assertion @dropdowns
-  Scenario: dropdown list
-    Given I navigate to "http://the-internet.herokuapp.com/dropdown"
-    And I should wait for "5" seconds
-    When I select 1 option by value from dropdown having id "dropdown"
-    And I should wait for "5" seconds
-    Then option "1" by value from dropdown having id "dropdown" should be selected
-    Then option "2" by value from dropdown having id "dropdown" should be unselected
-    And I should wait for "5" seconds
-    Then option "Option 1" by value from dropdown having id "dropdown" should be selected
-    And I should wait for "5" seconds
-    Then option "Option 2" by value from dropdown having id "dropdown" should be unselected
-    And I should wait for "5" seconds
+  #@assertion @dropdowns
+  #Scenario: dropdown list
+  #  Given I navigate to "http://the-internet.herokuapp.com/dropdown"
+  #  And I should wait for "5" seconds
+  #  When I select 1 option by value from dropdown having id "dropdown"
+  #  And I should wait for "5" seconds
+  #  Then option "1" by value from dropdown having id "dropdown" should be selected
+  #  Then option "2" by value from dropdown having id "dropdown" should be unselected
+  #  And I should wait for "5" seconds
+  #  Then option "Option 1" by value from dropdown having id "dropdown" should be selected
+  #  And I should wait for "5" seconds
+  #  Then option "Option 2" by value from dropdown having id "dropdown" should be unselected
+  #  And I should wait for "5" seconds
