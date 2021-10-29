@@ -20,7 +20,7 @@ export async function navigate(self: World, direction: string) {
 
 export async function closeDriver(self: World) {
   debugLog("shutting down");
-  self.driver.quit;
+  await self.driver.quit;
 }
 
 export async function refreshPage(self: World) {
