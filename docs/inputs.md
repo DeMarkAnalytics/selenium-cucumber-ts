@@ -88,19 +88,19 @@ To toggle checkbox use following steps
 
 ## Steps For Radio Buttons
 
-To select radio button use following steps :
+### To select radio button use following steps
 
 ```cucumber
  Then I select radio button having (id,name,class,xpath,css) "*" should
 ```
 
-To select one radio button by text from radio button group use following steps :
+### To select one radio button by text from radio button group use following steps
 
 ```cucumber
  Then I select "(.*?)" option by text from radio button group having (id,name,class,xpath,css) "*" should
 ```
 
-To select one radio button by value from radio button group use following steps :
+### To select one radio button by value from radio button group use following steps
 
 ```cucumber
  Then I select "(.*?)" option by value from radio button group having (id,name,class,xpath,css) "*" should

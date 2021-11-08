@@ -1,45 +1,35 @@
-# Mobile Steps
+# Mobile steps have not been implemted but are planned
 
-## Tap Steps
+## Mobile Steps
 
----
-
-To tap on app element use following steps :
+### To tap on app element use following steps
 
 ```cucumber
  Then I tap on element having (id,name,class,xpath,css) "*" should
 ```
 
-To Tap on back button of device use following step :
+### To Tap on back button of device use following step
 
 ```cucumber
     Then I tap on back button of device
     Then I press back button of device
 ```
 
-## Gesture Steps
-
----
-
-To perform gesture operations on device
-
 ## Swipe steps
 
----
-
-To perform swipe using app elements use following steps :
+### To perform swipe using app elements use following steps
 
 ```cucumber
     Then I swipe from element having (id,name,class,xpath,css) "*" to element having (id,name,class,xpath,css) "*"
 ```
 
-To perform swipe using co-ordinates
+### To perform swipe using co-ordinates
 
 ```cucumber
     Then I swipe from co-ordinates "*","*" to co-ordinates "*","*"
 ```
 
-To perform swipe using direction
+### To perform swipe using direction
 
 ```cucumber
     Then I swipe right
@@ -48,7 +38,7 @@ To perform swipe using direction
     Then I swipe down
 ```
 
-To perform swipe using app element with direction use following steps :
+### To perform swipe using app element with direction use following steps
 
 ```cucumber
     Then I swipe element having (id,name,class,xpath,css) "*" to right
@@ -57,7 +47,7 @@ To perform swipe using app element with direction use following steps :
     Then I swipe element having (id,name,class,xpath,css) "*" to down
 ```
 
-To perform swipe using co-ordinates with direction use following steps :
+### To perform swipe using co-ordinates with direction use following steps
 
 ```cucumber
     Then I swipe co-ordinates "*","*" to left
@@ -70,25 +60,25 @@ To perform swipe using co-ordinates with direction use following steps :
 
 ---
 
-To perform long tap with default duration of 2 seconds on app elements use following steps :
+### To perform long tap with default duration of 2 seconds on app elements use following steps
 
 ```cucumber
     Then I long tap on element having (id,name,class,xpath,css) "*"
 ```
 
-To perform long tap with customized duration of seconds on app elements use following steps :
+### To perform long tap with customized duration of seconds on app elements use following steps
 
 ```cucumber
    Then I long tap on element having (id,name,class,xpath,css) "*" for "*" sec
 ```
 
-To perform long tap with default duration of 2 seconds using co-ordinates use following step :
+### To perform long tap with default duration of 2 seconds using co-ordinates use following step
 
 ```cucumber
    Then I long tap on coordinate "*","*"
 ```
 
-To perform long tap with customized duration of seconds using co-ordinates use following step :
+### To perform long tap with customized duration of seconds using co-ordinates use following step
 
 ```cucumber
    Then I long tap on co\-ordinate "*","*" for "*" sec
