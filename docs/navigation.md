@@ -1,6 +1,8 @@
 # Navigation Steps
 
-To open/close URL and to navigate between pages use following steps :
+## Implemented and tested
+
+### To open/close URL and to navigate between pages use following steps :
 
 ```cucumber
  Then I navigate to "*"
@@ -9,9 +11,9 @@ To open/close URL and to navigate between pages use following steps :
  Then I refresh page
 ```
 
-## Partially tested steps
+## Implemented but not tested
 
-To switch between windows use following steps :
+### To switch between windows use following steps :
 
 ```cucumber
  Then I switch to new window
@@ -22,14 +24,14 @@ To switch between windows use following steps :
  Then I switch to main window
 ```
 
-To switch between frames use following steps :
+### To switch between frames use following steps :
 
 ```cucumber
  Then I switch to frame "*"
  Then I switch to main content
 ```
 
-To interact with browser use following steps :
+### To interact with browser use following steps :
 
 ```cucumber
  Then I resize browser window size to width # and height #
@@ -37,40 +39,42 @@ To interact with browser use following steps :
  Then I close browser
 ```
 
-To zoom in/out webpage use following steps :
+### To zoom in/out webpage use following steps :
 
 ```cucumber
  Then I zoom in page
  Then I zoom out page
 ```
 
-To zoom out webpage till necessary element displays use following steps :
+### To zoom out webpage till necessary element displays use following steps :
 
 ```cucumber
  Then I zoom out page till I see element having (id,name,class,xpath,css) "*"
 ```
 
-To reset webpage view use following step :
+### To reset webpage view use following step :
 
 ```cucumber
  Then I reset page view
 ```
 
-To scroll webpage use following steps :
+### To scroll webpage use following steps :
 
 ```cucumber
  Then I scroll to top of page
  Then I scroll to end of page
 ```
 
-To scroll webpage to specific element use following steps :
+### To scroll webpage to specific element use following steps :
 
 ```cucumber
  Then I scroll to element having (id,name,class,xpath,css) "*"
 ```
 
-To hover over a element use following steps :
+### To hover over a element use following steps :
 
 ```cucumber
  Then I hover over element having (id,name,class,xpath,css) "*"
 ```
+
+## Unimplemented
