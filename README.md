@@ -55,38 +55,14 @@ install `Cucumber (Cherkin) Full Support` plugin
 }
 ```
 
-## Navigation Steps
+## Supported Steps
 
-[here](docs/navigation.md)
-
-## Assertion Steps
-
-[here](docs/pageAssertions.md)
-
-## Input Steps
-
-[here](docs/inputs.md)
-
-## Click Steps
-
-[here](docs/clicks.md)
-
-## Progress Steps
-
-[here](docs/progress.md)
-
-## Javascript Handling Steps
-
-[here](docs/javascript.md)
-
-## Screenshot Steps
-
-[here](docs/screenshot.md)
-
-## Configuration Steps
-
-[here](docs/configurations.md)
-
-## Mobile Steps
-
-[here](docs/mobile.md)
+* [Navigation Steps](docs/navigation.md)
+* [Assertion Steps](docs/pageAssertions.md)
+* [Input Steps](docs/inputs.md)
+* [Click Steps](docs/clicks.md)
+* [Progress Steps](docs/progress.md)
+* [Javascript Handling Steps](docs/javascript.md)
+* [Screenshot Steps](docs/screenshot.md)
+* [Configuration Steps](docs/configurations.md)
+* [Mobile Steps](docs/mobile.md)
