@@ -6,5 +6,8 @@
     "cucumberautocomplete.stepsInvariants": true,
     "cucumberautocomplete.customParameters": [
     
+    ],
+    "cSpell.words": [
+        "multiselect"
     ]
 }
