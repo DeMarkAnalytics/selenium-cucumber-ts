@@ -2,6 +2,7 @@ import assert from "assert";
 import { World } from "../world";
 import * as image from "./images";
 import { elementLocator } from "./elements";
+import { waitForElementToBeLocated } from "./progress";
 let debugLog = require("debug")("assertions");
 
 export async function getPageTitle(self: World) {
@@ -31,11 +32,13 @@ export async function checkPartialTitle(self: World, expected: string, negate: s
 
 export async function getElementText(self: World, elementType: string, typeValue: string) {
   debugLog(`getting text of ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   return await self.driver.findElement(elementLocator(elementType, typeValue)).getText();
 }
 
 export async function checkElementText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string) {
   debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementText = await getElementText(self, elementType, typeValue);
 
   if (negate === null) {
@@ -47,6 +50,7 @@ export async function checkElementText(self: World, elementType: string, typeVal
 
 export async function checkElementPartialText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string) {
   debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementText = await getElementText(self, elementType, typeValue);
 
   if (negate === null) {
@@ -58,6 +62,7 @@ export async function checkElementPartialText(self: World, elementType: string, 
 
 export async function checkElementAttribute(self: World, elementType: string, typeValue: string, hasType: string, hasTypeValue: string, negate: string) {
   debugLog(`checking if ${elementType} ${typeValue} has element ${hasType} ${hasTypeValue} `);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const attributeValue = await getElementAttribute(self, elementType, typeValue, hasType);
 
   if (negate === null) {
@@ -69,6 +74,7 @@ export async function checkElementAttribute(self: World, elementType: string, ty
 
 export async function checkElementEnable(self: World, elementType: string, typeValue: string, status: string, negate: string) {
   debugLog(`checking element enabled status ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementStatus = await self.driver.findElement(elementLocator(elementType, typeValue)).isEnabled();
 
   if (negate === null) {
@@ -88,6 +94,8 @@ export async function checkElementEnable(self: World, elementType: string, typeV
 
 export async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
   debugLog(`checking element displayed status ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
+
   let elements = await self.driver.findElements(elementLocator(elementType, typeValue));
   if ( elements.length === 1 ) {
     return elements[0].isDisplayed();
@@ -100,6 +108,7 @@ export async function isElementDisplayed(self: World, elementType: string, typeV
 
 export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate: string) {
   debugLog(`checking element presence status ${elementType} ${typeValue}`);
+
   if (negate === null) {
     assert(await isElementDisplayed(self, elementType, typeValue));
   } else {
@@ -119,6 +128,8 @@ export function validateLocater(locator: string) {
 
 export async function isCheckboxChecked(self: World, elementType: string, typeValue: string, state: string) {
   debugLog(`checking checkbox status ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
+
   if (state === "checked") {
     assert(await (await self.driver.findElement(elementLocator(elementType, typeValue))).isSelected());
   } else if (state === "unchecked") {
@@ -128,6 +139,8 @@ export async function isCheckboxChecked(self: World, elementType: string, typeVa
 
 export async function isRadioButtonSelected(self: World, elementType: string, typeValue: string, state: string) {
   debugLog(`checking radio button status ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
+
   if (state === "selected") {
     assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected());
   } else if (state === "unselected") {
@@ -144,6 +157,8 @@ export async function isOptionFromDropDownSelected(
   state: string
 ) {
   debugLog(`checking option from dropdown status ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
+
   if (state === "selected") {
     assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected());
   } else if (state === "unselected") {
@@ -159,6 +174,7 @@ export async function isOptionFromRadioButtonGroupSelected(
   state: string
 ) {
   debugLog(`checking option from radio group status ${elementType} ${typeValue}`);
+  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   //how to navigate radio buttons???
   return "pending";
 }
