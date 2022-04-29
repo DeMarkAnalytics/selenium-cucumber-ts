@@ -9,7 +9,7 @@ export async function getPageTitle(self: World) {
   return await self.driver.getTitle();
 }
 
-export async function checkTitle(self: World, expected: string, negate?: string) {
+export async function checkTitle(self: World, expected: string, negate: string = null) {
   const pageTitle = await getPageTitle(self);
   if (negate === "" || negate === undefined) {
     debugLog(`checking "${pageTitle}" is equal to "${expected}"`);
@@ -20,7 +20,7 @@ export async function checkTitle(self: World, expected: string, negate?: string)
   }
 }
 
-export async function checkPartialTitle(self: World, expected: string, negate?: string) {
+export async function checkPartialTitle(self: World, expected: string, negate: string = null) {
   const pageTitle = await getPageTitle(self);
 
   if (negate === "" || negate === undefined) {
@@ -38,7 +38,7 @@ export async function getElementText(self: World, elementType: string, typeValue
   return await self.driver.findElement(elementLocator(elementType, typeValue)).getText();
 }
 
-export async function checkElementText(self: World, elementType: string, typeValue: string, expectedText: string, negate?: string) {
+export async function checkElementText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string = null) {
   debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementText = await getElementText(self, elementType, typeValue);
@@ -50,7 +50,7 @@ export async function checkElementText(self: World, elementType: string, typeVal
   }
 }
 
-export async function checkElementPartialText(self: World, elementType: string, typeValue: string, expectedText: string, negate?: string) {
+export async function checkElementPartialText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string = null) {
   debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementText = await getElementText(self, elementType, typeValue);
@@ -62,7 +62,7 @@ export async function checkElementPartialText(self: World, elementType: string, 
   }
 }
 
-export async function checkElementAttribute(self: World, elementType: string, typeValue: string, hasType: string, hasTypeValue: string, negate?: string) {
+export async function checkElementAttribute(self: World, elementType: string, typeValue: string, hasType: string, hasTypeValue: string, negate: string = null) {
   debugLog(`checking if ${elementType} ${typeValue} has element ${hasType} ${hasTypeValue} `);
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const attributeValue = await getElementAttribute(self, elementType, typeValue, hasType);
@@ -74,7 +74,7 @@ export async function checkElementAttribute(self: World, elementType: string, ty
   }
 }
 
-export async function checkElementEnable(self: World, elementType: string, typeValue: string, status: string, negate?: string) {
+export async function checkElementEnable(self: World, elementType: string, typeValue: string, status: string, negate: string = null) {
   debugLog(`checking element enabled status ${elementType} ${typeValue}`);
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementStatus = await self.driver.findElement(elementLocator(elementType, typeValue)).isEnabled();
@@ -100,20 +100,23 @@ export async function isElementDisplayed(self: World, elementType: string, typeV
 
   let elements = await self.driver.findElements(elementLocator(elementType, typeValue));
   if ( elements.length === 1 ) {
+    debugLog(`element ${elementType} ${typeValue} is displayed`);
     return elements[0].isDisplayed();
   } else if ( elements.length === 0 ) {
+    debugLog(`element ${elementType} ${typeValue} is not displayed`);
     return false
   } else {
     throw new Error(`Found more than one element for ${elementType} ${typeValue}`);
   }
 }
 
-export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate?: string) {
-  debugLog(`checking element presence status ${elementType} ${typeValue}`);
-
-  if (negate === "" || negate === undefined) {
+export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate: string = null) {
+  debugLog(`negate: "${negate}"`);
+  if (negate === "" || negate === null) {
+    debugLog(`checking if element is present: ${elementType} ${typeValue}`);
     assert(await isElementDisplayed(self, elementType, typeValue));
   } else {
+    debugLog(`checking that element is not present: ${elementType} ${typeValue}`);
     // TODO: how to catch error here when elment doesn't exist
     assert(!(await isElementDisplayed(self, elementType, typeValue)));
   }
