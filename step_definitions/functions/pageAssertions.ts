@@ -11,7 +11,7 @@ export async function getPageTitle(self: World) {
 
 export async function checkTitle(self: World, expected: string, negate: string = null) {
   const pageTitle = await getPageTitle(self);
-  if (negate === "" || negate === undefined) {
+  if (negate === "" || negate === null) {
     debugLog(`checking "${pageTitle}" is equal to "${expected}"`);
     assert.strictEqual(pageTitle, expected);
   } else {
@@ -23,7 +23,7 @@ export async function checkTitle(self: World, expected: string, negate: string =
 export async function checkPartialTitle(self: World, expected: string, negate: string = null) {
   const pageTitle = await getPageTitle(self);
 
-  if (negate === "" || negate === undefined) {
+  if (negate === "" || negate === null) {
     debugLog(`checking ${pageTitle} contains ${expected}`);
     assert.match(pageTitle, new RegExp(`.*${escapeRegExp(expected)}.*`));
   } else {
@@ -43,7 +43,7 @@ export async function checkElementText(self: World, elementType: string, typeVal
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementText = await getElementText(self, elementType, typeValue);
 
-  if (negate === "" || negate === undefined) {
+  if (negate === "" || negate === null) {
     assert.strictEqual(elementText, expectedText);
   } else {
     assert.doesNotMatch(elementText, new RegExp(`^${escapeRegExp(expectedText)}$`));
@@ -55,7 +55,7 @@ export async function checkElementPartialText(self: World, elementType: string, 
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementText = await getElementText(self, elementType, typeValue);
 
-  if (negate === "" || negate === undefined) {
+  if (negate === "" || negate === null) {
     assert.match(elementText, new RegExp(`.*${escapeRegExp(expectedText)}.*`));
   } else {
     assert.doesNotMatch(elementText, new RegExp(`.*${escapeRegExp(expectedText)}.*`));
@@ -67,7 +67,7 @@ export async function checkElementAttribute(self: World, elementType: string, ty
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const attributeValue = await getElementAttribute(self, elementType, typeValue, hasType);
 
-  if (negate === "" || negate === undefined) {
+  if (negate === "" || negate === null) {
     assert.strictEqual(attributeValue, hasTypeValue);
   } else {
     assert.strictEqual(attributeValue, null);
@@ -79,7 +79,7 @@ export async function checkElementEnable(self: World, elementType: string, typeV
   await waitForElementToBeLocated(self, elementType, typeValue, 4000);
   const elementStatus = await self.driver.findElement(elementLocator(elementType, typeValue)).isEnabled();
 
-  if (negate === "" || negate === undefined) {
+  if (negate === "" || negate === null) {
     if (status === "enabled") {
       assert(elementStatus);
     } else if (status === "disabled") {
