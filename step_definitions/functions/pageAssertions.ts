@@ -96,7 +96,12 @@ export async function checkElementEnable(self: World, elementType: string, typeV
 
 export async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
   debugLog(`checking element displayed status ${elementType} ${typeValue}`);
-  await waitForElementToBeLocated(self, elementType, typeValue, 4000);
+  try {
+    await waitForElementToBeLocated(self, elementType, typeValue, 4);
+  } catch (err) {
+    debugLog(`element ${elementType} ${typeValue} not found`);
+    return false
+  }
 
   let elements = await self.driver.findElements(elementLocator(elementType, typeValue));
   if ( elements.length === 1 ) {
