@@ -19,11 +19,11 @@ Then(/^I close browser$/, async function (this: World) {
 });
 
 Then(/^I resize browser window size to width (\d+) and height (\d+)$/, async function (this: World, width: number, height: number) {
-  await this.driver.manage().window().setSize(width, height);
+  await navigate.setWindowSize(this, width, height);
 });
 
 Then(/^I maximize browser window$/, async function (this: World) {
-  await this.driver.manage().window().maximize();
+  await navigate.maximizeWindow(this);
 });
 
 Then(/^I refresh page$/, async function (this: World) {
