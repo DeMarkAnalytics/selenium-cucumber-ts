@@ -1,7 +1,12 @@
 import assert from "assert";
 import { World } from "../world";
 import * as image from "./images";
-import { elementLocator, getElementAttribute, getElementText } from "./elements";
+import {
+  SelectorType,
+  elementLocator,
+  getElementAttribute,
+  getElementText,
+} from "./elements";
 import { waitForElementToBeLocated } from "./progress";
 let debugLog = require("debug")("assertions");
 
@@ -25,7 +30,11 @@ export async function getPageTitle(self: World) {
  * @param {(string | null)} [negate=null]
  * @returns Promise<void>
  */
-export async function checkTitle(self: World, expected: string, negate: string | null = null) {
+export async function checkTitle(
+  self: World,
+  expected: string,
+  negate: string | null = null
+) {
   const pageTitle = await getPageTitle(self);
   if (negate === "" || negate === null) {
     debugLog(`checking "${pageTitle}" is equal to "${expected}"`);
@@ -45,15 +54,21 @@ export async function checkTitle(self: World, expected: string, negate: string |
  * @param {(string | null)} [negate=null]
  * @returns Promise<void>
  */
-export async function checkPartialTitle(self: World, expected: string, negate: string | null = null) {
+export async function checkPartialTitle(
+  self: World,
+  expected: string,
+  negate: string | null = null
+) {
   const pageTitle = await getPageTitle(self);
+  const regex = new RegExp(`.*${escapeRegExp(expected)}.*`);
 
+  console.log(`negate: "${negate}"`);
   if (negate === "" || negate === null) {
     debugLog(`checking ${pageTitle} contains ${expected}`);
-    assert.match(pageTitle, new RegExp(`.*${escapeRegExp(expected)}.*`));
+    assert.match(pageTitle, regex);
   } else {
     debugLog(`checking ${pageTitle} does not contain ${expected}`);
-    assert.doesNotMatch(pageTitle, new RegExp(`.*${escapeRegExp(expected)}.*`));
+    assert.doesNotMatch(pageTitle, regex);
   }
 }
 
@@ -62,13 +77,19 @@ export async function checkPartialTitle(self: World, expected: string, negate: s
  * @date 12/29/2022 - 1:08:55 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} expectedText - expected text
  * @param {(string | null)} [negate=null] - negate the check
  * @returns Promise<void>
  */
-export async function checkElementText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string | null = null) {
+export async function checkElementText(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  expectedText: string,
+  negate: string | null = null
+) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
   const elementText = await getElementText(self, elementType, typeValue);
@@ -76,7 +97,10 @@ export async function checkElementText(self: World, elementType: string, typeVal
   if (negate === "" || negate === null) {
     assert.strictEqual(elementText, expectedText);
   } else {
-    assert.doesNotMatch(elementText, new RegExp(`^${escapeRegExp(expectedText)}$`));
+    assert.doesNotMatch(
+      elementText,
+      new RegExp(`^${escapeRegExp(expectedText)}$`)
+    );
   }
 }
 
@@ -85,13 +109,19 @@ export async function checkElementText(self: World, elementType: string, typeVal
  * @date 12/29/2022 - 1:08:55 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} expectedText - expected text
  * @param {(string | null)} [negate=null] - negate the check
  * @returns Promise<void>
  */
-export async function checkElementPartialText(self: World, elementType: string, typeValue: string, expectedText: string, negate: string | null = null) {
+export async function checkElementPartialText(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  expectedText: string,
+  negate: string | null = null
+) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`checking text of ${elementType} ${typeValue}, ${expectedText}`);
   const elementText = await getElementText(self, elementType, typeValue);
@@ -99,7 +129,10 @@ export async function checkElementPartialText(self: World, elementType: string, 
   if (negate === "" || negate === null) {
     assert.match(elementText, new RegExp(`.*${escapeRegExp(expectedText)}.*`));
   } else {
-    assert.doesNotMatch(elementText, new RegExp(`.*${escapeRegExp(expectedText)}.*`));
+    assert.doesNotMatch(
+      elementText,
+      new RegExp(`.*${escapeRegExp(expectedText)}.*`)
+    );
   }
 }
 
@@ -108,7 +141,7 @@ export async function checkElementPartialText(self: World, elementType: string, 
  * @date 12/29/2022 - 1:11:56 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} hasType - element attribute type (id, name, xpath, class, css, link etc)
  * @param {string} hasTypeValue - element attribute value
@@ -117,20 +150,30 @@ export async function checkElementPartialText(self: World, elementType: string, 
  */
 export async function checkElementAttribute(
   self: World,
-  elementType: string,
+  elementType: string | SelectorType,
   typeValue: string,
   hasType: string,
   hasTypeValue: string,
   negate: string | null = null
 ) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
-  debugLog(`checking if ${elementType} ${typeValue} has element ${hasType} ${hasTypeValue} `);
-  const attributeValue = await getElementAttribute(self, elementType, typeValue, hasType);
+  const attributeValue = await getElementAttribute(
+    self,
+    elementType,
+    typeValue,
+    hasType
+  );
 
   if (negate === "" || negate === null) {
+    debugLog(
+      `checking if ${elementType} ${typeValue} has attribute ${hasType} ${hasTypeValue} `
+    );
     assert.strictEqual(attributeValue, hasTypeValue);
   } else {
-    assert.strictEqual(attributeValue, null);
+    debugLog(
+      `checking if ${elementType} ${typeValue} does not have attribute ${hasType} ${hasTypeValue} `
+    );
+    assert.notEqual(attributeValue, null);
   }
 }
 
@@ -141,16 +184,24 @@ export async function checkElementAttribute(
  * @export
  * @async
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} status - enabled or disabled
  * @param {(string | null)} [negate=null] - negate the check
  * @returns Promise<void>
  */
-export async function checkElementEnable(self: World, elementType: string, typeValue: string, status: string, negate: string | null = null) {
+export async function checkElementEnable(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  status: string,
+  negate: string | null = null
+) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`checking element enabled status ${elementType} ${typeValue}`);
-  const elementStatus = await self.driver.findElement(elementLocator(elementType, typeValue)).isEnabled();
+  const elementStatus = await self.driver
+    .findElement(elementLocator(elementType, typeValue))
+    .isEnabled();
 
   if (negate === "" || negate === null) {
     if (status === "enabled") {
@@ -175,11 +226,15 @@ export async function checkElementEnable(self: World, elementType: string, typeV
  * @export
  * @async
  * @param {World} self
- * @param {string} elementType
+ * @param {string|SelectorType} elementType
  * @param {string} typeValue
  * @returns boolean
  */
-export async function isElementDisplayed(self: World, elementType: string, typeValue: string) {
+export async function isElementDisplayed(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`checking element displayed status ${elementType} ${typeValue}`);
   try {
     await waitForElementToBeLocated(self, elementType, typeValue, 4);
@@ -188,7 +243,9 @@ export async function isElementDisplayed(self: World, elementType: string, typeV
     return false;
   }
 
-  let elements = await self.driver.findElements(elementLocator(elementType, typeValue));
+  let elements = await self.driver.findElements(
+    elementLocator(elementType, typeValue)
+  );
   if (elements.length === 1) {
     debugLog(`element ${elementType} ${typeValue} is displayed`);
     return elements[0].isDisplayed();
@@ -196,7 +253,9 @@ export async function isElementDisplayed(self: World, elementType: string, typeV
     debugLog(`element ${elementType} ${typeValue} is not displayed`);
     return false;
   } else {
-    throw new Error(`Found more than one element for ${elementType} ${typeValue}`);
+    throw new Error(
+      `Found more than one element for ${elementType} ${typeValue}`
+    );
   }
 }
 
@@ -208,17 +267,24 @@ export async function isElementDisplayed(self: World, elementType: string, typeV
  * @export
  * @async
  * @param {World} self
- * @param {string} elementType
+ * @param {string|SelectorType} elementType
  * @param {string} typeValue
  * @returns Promise<void>
  */
-export async function checkElementPresence(self: World, elementType: string, typeValue: string, negate: string | null = null) {
+export async function checkElementPresence(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  negate: string | null = null
+) {
   debugLog(`negate: "${negate}"`);
   if (negate === "" || negate === null) {
     debugLog(`checking if element is present: ${elementType} ${typeValue}`);
     assert(await isElementDisplayed(self, elementType, typeValue));
   } else {
-    debugLog(`checking that element is not present: ${elementType} ${typeValue}`);
+    debugLog(
+      `checking that element is not present: ${elementType} ${typeValue}`
+    );
     // TODO: how to catch error here when elment doesn't exist
     assert(!(await isElementDisplayed(self, elementType, typeValue)));
   }
@@ -229,19 +295,32 @@ export async function checkElementPresence(self: World, elementType: string, typ
  * @date 12/29/2022 - 1:28:42 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} state - checked or unchecked
  * @returns Promise<void>
  */
-export async function assertCheckboxChecked(self: World, elementType: string, typeValue: string, state: string) {
+export async function assertCheckboxChecked(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  state: string
+) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`checking checkbox status ${elementType} ${typeValue}`);
 
   if (state === "checked") {
-    assert(await (await self.driver.findElement(elementLocator(elementType, typeValue))).isSelected());
+    assert(
+      await (
+        await self.driver.findElement(elementLocator(elementType, typeValue))
+      ).isSelected()
+    );
   } else if (state === "unchecked") {
-    assert(!(await (await self.driver.findElement(elementLocator(elementType, typeValue))).isSelected()));
+    assert(
+      !(await (
+        await self.driver.findElement(elementLocator(elementType, typeValue))
+      ).isSelected())
+    );
   }
 }
 
@@ -250,19 +329,32 @@ export async function assertCheckboxChecked(self: World, elementType: string, ty
  * @date 12/29/2022 - 1:28:42 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} state - checked or unchecked
  * @returns Promise<void>
  */
-export async function assertRadioButtonSelected(self: World, elementType: string, typeValue: string, state: string) {
+export async function assertRadioButtonSelected(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  state: string
+) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`checking radio button status ${elementType} ${typeValue}`);
 
   if (state === "selected") {
-    assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected());
+    assert(
+      await self.driver
+        .findElement(elementLocator(elementType, typeValue))
+        .isSelected()
+    );
   } else if (state === "unselected") {
-    assert(!(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected()));
+    assert(
+      !(await self.driver
+        .findElement(elementLocator(elementType, typeValue))
+        .isSelected())
+    );
   }
 }
 
@@ -271,26 +363,32 @@ export async function assertRadioButtonSelected(self: World, elementType: string
  * @date 12/29/2022 - 1:28:42 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} state - checked or unchecked
  * @returns Promise<void>
  */
 export async function assertOptionFromDropDownSelected(
   self: World,
-  elementType: string,
+  elementType: string | SelectorType,
   typeValue: string,
-  option: string,
-  optionAttribute: string,
   state: string
 ) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`checking option from dropdown status ${elementType} ${typeValue}`);
 
   if (state === "selected") {
-    assert(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected());
+    assert(
+      await self.driver
+        .findElement(elementLocator(elementType, typeValue))
+        .isSelected()
+    );
   } else if (state === "unselected") {
-    assert(!(await self.driver.findElement(elementLocator(elementType, typeValue)).isSelected()));
+    assert(
+      !(await self.driver
+        .findElement(elementLocator(elementType, typeValue))
+        .isSelected())
+    );
   }
 }
 
@@ -299,7 +397,7 @@ export async function assertOptionFromDropDownSelected(
  * @date 12/29/2022 - 1:28:42 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string|SelectorType} elementType - element type (id, name, xpath, class, css, link etc)
  * @param {string} typeValue - element value
  * @param {string} option - the option to check
  * @param {string} optionAttribute - the attribute of the option to check
@@ -308,21 +406,35 @@ export async function assertOptionFromDropDownSelected(
  */
 export async function assertOptionFromRadioButtonGroupSelected(
   self: World,
-  elementType: string,
+  elementType: string | SelectorType,
   typeValue: string,
   option: string,
   optionAttribute: string,
   state: string
 ) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
-  debugLog(`checking option from radio group status ${elementType} ${typeValue}`);
+  debugLog(
+    `checking option from radio group status ${elementType} ${typeValue}`
+  );
   //how to navigate radio buttons???
   return "pending";
 }
 
-export async function isImageSimilar(self: World, actualImageType: string, actualImageName: string, expectedImageType: string, expectedImageName: string) {
+export async function isImageSimilar(
+  self: World,
+  actualImageType: string,
+  actualImageName: string,
+  expectedImageType: string,
+  expectedImageName: string
+) {
   debugLog("comparing images");
-  await image.compare(self, actualImageType, actualImageName, expectedImageType, expectedImageName);
+  await image.compare(
+    self,
+    actualImageType,
+    actualImageName,
+    expectedImageType,
+    expectedImageName
+  );
 }
 
 /**
