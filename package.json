@@ -25,7 +25,7 @@
   "devDependencies": {
     "@cucumber/cucumber": ">=7.3.2",
     "@cucumber/pretty-formatter": "^1.0.0-alpha.2",
-    "@types/node": "^17.0.30",
+    "@types/node": "^17.0.31",
     "@types/selenium-webdriver": "^4.0.19",
     "chromedriver": "^108.0.0",
     "geckodriver": "^3.0.1",
