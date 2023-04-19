@@ -4,28 +4,42 @@ import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
 let debugLog = require("debug")("keys");
 
+/**
+ * Description: Sends the backspace key to an element
+ * @date 12/29/2022 - 12:04:37 PM
+ *
+ * @param {World} self - Cucumber World object
+ * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string} typeValue - value of the element type
+ * @returns Promise<void>
+ */
 export async function backspace(self: World, elementType: string, typeValue: string) {
-  debugLog(`sending backspace to ${elementType} ${typeValue}`);
-  await waitForElementToBeLocated(self, elementType, typeValue, 60000);
-  for (var retry = 1; retry <= 2; retry++) {
-    try {
-      await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.BACK_SPACE);
-      break;
-    } catch (x) {
-      await self.driver.sleep(1000);
-    }
+  try {
+    await waitForElementToBeLocated(self, elementType, typeValue, 6);
+    debugLog(`sending backspace to ${elementType} ${typeValue}`);
+    await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.BACK_SPACE);
+  } catch (error) {
+    console.error(`could not sending backspace to ${elementType} ${typeValue}`);
+    throw error;
   }
 }
 
+/**
+ * Description: Sends the enter key to an element
+ * @date 12/29/2022 - 12:04:37 PM
+ *
+ * @param {World} self - Cucumber World object
+ * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string} typeValue - value of the element type
+ * @returns Promise<void>
+ */
 export async function enter(self: World, elementType: string, typeValue: string) {
-  debugLog(`sending enter to ${elementType} ${typeValue}`);
-  await waitForElementToBeLocated(self, elementType, typeValue, 60000);
-  for (var retry = 1; retry <= 2; retry++) {
-    try {
-      await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.ENTER);
-      break;
-    } catch (x) {
-      await self.driver.sleep(1000);
-    }
+  try {
+    await waitForElementToBeLocated(self, elementType, typeValue, 6);
+    debugLog(`sending enter to ${elementType} ${typeValue}`);
+    await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.ENTER);
+  } catch (error) {
+    console.error(`could not sending backspace to ${elementType} ${typeValue}`);
+    throw error;
   }
 }

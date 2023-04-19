@@ -48,7 +48,7 @@ Then(
 Then(
   /^checkbox having (id|name|class|xpath|css) "(.*?)" should be (checked|unchecked)$/,
   async function (this: World, elementType: string, typeValue: string, state: string) {
-    await page.isCheckboxChecked(this, elementType, typeValue, state);
+    await page.assertCheckboxChecked(this, elementType, typeValue, state);
   }
 );
 
@@ -56,14 +56,14 @@ Then(
   /^radio button having (id|name|class|xpath|css) "(.*?)" should be (selected|unselected)$/,
   async function (this: World, elementType: string, typeValue: string, state: string) {
     // TODO: test radio button selection this is untested
-    await page.isRadioButtonSelected(this, elementType, typeValue, state);
+    await page.assertRadioButtonSelected(this, elementType, typeValue, state);
   }
 );
 
 Then(
   /^option "(.*?)" by (.+) from radio button group having (id|name|class|xpath|css) "(.*?)" should be (selected|unselected)$/,
   async function (this: World, option: string, optionAttribute: string, elementType: string, typeValue: string, state: string) {
-    await page.isOptionFromRadioButtonGroupSelected(this, elementType, typeValue, option, optionAttribute, state);
+    await page.assertOptionFromRadioButtonGroupSelected(this, elementType, typeValue, option, optionAttribute, state);
     return "pending"; //TODO: I don't know how to navigate radio button groups
   }
 );
@@ -81,15 +81,14 @@ Then(/^I should see alert text as "(.*?)"$/, async function (this: World, text: 
 });
 
 Then(
-  /^option "(.*?)" by (.+) from dropdown having (.+) "(.*?)" should be (selected|unselected)$/,
+  /^option "(.*?)" by (.+) from dropdown having (id|name|class|xpath|css) "(.*?)" should be (selected|unselected)$/,
   async function (this: World, option: string, optionAttribute: string, elementType: string, typeValue: string, state: string) {
-    page.validateLocater(elementType); // may not need this due to regex being specific
-    await page.isOptionFromDropDownSelected(this, elementType, typeValue, option, optionAttribute, state);
+    await page.assertOptionFromDropDownSelected(this, elementType, typeValue, option, optionAttribute, state);
   }
 );
 
 Then(
-  /^actual image having (.+) "(.*?)" and expected image having (.+) "(.*?)" should be similar$/,
+  /^actual image having (.+) "(.*?)" and expected image having (id|name|class|xpath|css) "(.*?)" should be similar$/,
   async function (this: World, actualImageType: string, actualImageName: string, expectedImageType: string, expectedImageName: string) {
     await page.isImageSimilar(this, actualImageType, actualImageName, expectedImageType, expectedImageName);
     // TODO
