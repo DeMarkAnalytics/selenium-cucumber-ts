@@ -16,7 +16,7 @@
 
 ### To assert element text use any of the following steps
 
-```cucumber
+````cucumber
  Then element having (id,name,class,xpath,css) "*" should have text as "*"
  Then element having (id,name,class,xpath,css) "*" should have partial text as "*"
  Then element having (id,name,class,xpath,css) "*" should not have text as "*"
@@ -36,7 +36,7 @@
 
 ```cucumber
  Then element having (id,name,class,xpath,css) "*" should be enabled
-```
+````
 
 ### To assert that element is disabled use any of the following steps
 
