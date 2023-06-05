@@ -1,5 +1,5 @@
 import { World } from "../world";
-import { elementLocator } from "./elements";
+import { SelectorType, elementLocator } from "./elements";
 import { Key } from "selenium-webdriver";
 let debugLog = require("debug")("inputs");
 
@@ -8,14 +8,21 @@ let debugLog = require("debug")("inputs");
  * @date 12/29/2022 - 12:20:18 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @param {string} text - text to enter into the element
  * @returns Promise<void>
  */
-export async function enterText(self: World, elementType: string, typeValue: string, text: string) {
+export async function enterText(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  text: string
+) {
   debugLog(`Entering text into ${elementType} ${typeValue}`);
-  await (await self.driver).findElement(elementLocator(elementType, typeValue)).sendKeys(text);
+  await (await self.driver)
+    .findElement(elementLocator(elementType, typeValue))
+    .sendKeys(text);
 }
 
 /**
@@ -23,17 +30,25 @@ export async function enterText(self: World, elementType: string, typeValue: str
  * @date 12/29/2022 - 12:21:21 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function clearText(self: World, elementType: string, typeValue: string) {
+export async function clearText(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`clearing text from ${elementType} ${typeValue}`);
   await self.driver.findElement(elementLocator(elementType, typeValue)).clear();
   // clear() doesn't work in all browsers
   // https://stackoverflow.com/questions/7732125/clear-text-from-textarea-with-selenium
-  await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.CONTROL + "a");
-  await self.driver.findElement(elementLocator(elementType, typeValue)).sendKeys(Key.DELETE);
+  await self.driver
+    .findElement(elementLocator(elementType, typeValue))
+    .sendKeys(Key.CONTROL + "a");
+  await self.driver
+    .findElement(elementLocator(elementType, typeValue))
+    .sendKeys(Key.DELETE);
 }
 
 /**
@@ -44,19 +59,35 @@ export async function clearText(self: World, elementType: string, typeValue: str
  * @async
  * @param {World} self
  * @param {string} elementType
- * @param {string} typeValue
+ * @param {string | SelectorType} typeValue
  * @param {(string | number)} option
  * @param {string} [optionType="value"]
  * @returns promise<void>
  */
 // by = index|text
-export async function selectOptionFromDropdown(self: World, elementType: string, typeValue: string, option: string | number, optionType: string = "value") {
-  debugLog(`selecting option ${option} from dropdown ${elementType} ${typeValue}`);
-  const xpathOption = optionType !== "index" ? `@${optionType}=${option}` : option;
-  let dropdown = await self.driver.findElement(elementLocator(elementType, typeValue));
-  dropdown.click();
-  let chosenOption = await self.driver.findElement(elementLocator("xpath", `//select[@${elementType}=\'${typeValue}\']/option[${xpathOption}]`));
-  chosenOption.click();
+export async function selectOptionFromDropdown(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  option: string | number,
+  optionType: string = "value"
+) {
+  debugLog(
+    `selecting option ${option} from dropdown ${elementType} ${typeValue}`
+  );
+  const xpathOption =
+    optionType !== "index" ? `@${optionType}=${option}` : option;
+  let dropdown = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
+  await dropdown.click();
+  let chosenOption = await self.driver.findElement(
+    elementLocator(
+      "xpath",
+      `//select[@${elementType}=\'${typeValue}\']/option[${xpathOption}]`
+    )
+  );
+  await chosenOption.click();
 }
 
 /**
@@ -65,16 +96,23 @@ export async function selectOptionFromDropdown(self: World, elementType: string,
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function selectAllOptionsFromMultiselectDropdown(self: World, elementType: string, typeValue: string) {
+export async function selectAllOptionsFromMultiselectDropdown(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`selecting all options from dropdown ${elementType} ${typeValue}`);
-  let dropdown = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let dropdown = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   //TODO: finish dropdown interaction
   return "pending";
 }
+
 /**
  * unimplemented
  * Description: Unselects all options from a multiselect dropdown
@@ -85,9 +123,15 @@ export async function selectAllOptionsFromMultiselectDropdown(self: World, eleme
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function unselectAllOptionsFromMultiselectDropdown(self: World, elementType: string, typeValue: string) {
+export async function unselectAllOptionsFromMultiselectDropdown(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`unselecting all options from dropdown ${elementType} ${typeValue}`);
-  let dropdown = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let dropdown = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   //TODO: finish dropdown interaction
   return "pending";
 }
@@ -98,15 +142,21 @@ export async function unselectAllOptionsFromMultiselectDropdown(self: World, ele
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function checkCheckbox(self: World, elementType: string, typeValue: string) {
+export async function checkCheckbox(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`checking checkbox ${elementType} ${typeValue}`);
-  let checkbox = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let checkbox = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   if (!checkbox.isSelected()) {
-    checkbox.click();
+    await checkbox.click();
   }
   //TODO: need checkbox checking test
   return "pending";
@@ -118,15 +168,21 @@ export async function checkCheckbox(self: World, elementType: string, typeValue:
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function uncheckCheckbox(self: World, elementType: string, typeValue: string) {
+export async function uncheckCheckbox(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`unchecking checkbox ${elementType} ${typeValue}`);
-  let checkbox = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let checkbox = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   if (checkbox.isSelected()) {
-    checkbox.click();
+    await checkbox.click();
   }
   //TODO: need checkbox checking test this may not work
   return "pending";
@@ -138,14 +194,20 @@ export async function uncheckCheckbox(self: World, elementType: string, typeValu
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function toggleCheckbox(self: World, elementType: string, typeValue: string) {
+export async function toggleCheckbox(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`toggle checkbox ${elementType} ${typeValue}`);
-  let checkbox = await self.driver.findElement(elementLocator(elementType, typeValue));
-  checkbox.click();
+  let checkbox = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
+  await checkbox.click();
   //TODO: need checkbox checking test
   return "pending";
 }
@@ -156,15 +218,21 @@ export async function toggleCheckbox(self: World, elementType: string, typeValue
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function selectRadioButton(self: World, elementType: string, typeValue: string) {
+export async function selectRadioButton(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`select Radio button ${elementType} ${typeValue}`);
-  let radioButton = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let radioButton = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   if (!radioButton.isSelected()) {
-    radioButton.click();
+    await radioButton.click();
   }
   //TODO: need radioButton checking test this may not work
   return "pending";
@@ -176,15 +244,21 @@ export async function selectRadioButton(self: World, elementType: string, typeVa
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function unselectRadioButton(self: World, elementType: string, typeValue: string) {
+export async function unselectRadioButton(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string
+) {
   debugLog(`unselect Radio button ${elementType} ${typeValue}`);
-  let radioButton = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let radioButton = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   if (radioButton.isSelected()) {
-    radioButton.click();
+    await radioButton.click();
   }
   //TODO: need radioButton checking test this may not work
   return "pending";
@@ -196,14 +270,21 @@ export async function unselectRadioButton(self: World, elementType: string, type
  * @date 12/29/2022 - 12:25:47 PM
  *
  * @param {World} self - Cucumber World object
- * @param {string} elementType - element type (id, name, xpath, etc)
+ * @param {string | SelectorType} elementType - element type (id, name, xpath, etc)
  * @param {string} typeValue - value of the element type
  * @param {string} option - option to select
  * @returns Promise<void>
  */
-export async function selectOptionFromRadioButtonGroup(self: World, elementType: string, typeValue: string, option: string) {
+export async function selectOptionFromRadioButtonGroup(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  option: string
+) {
   debugLog(`select Radio button ${elementType} ${typeValue}`);
-  let radioButtonGroup = await self.driver.findElement(elementLocator(elementType, typeValue));
+  let radioButtonGroup = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
   //TODO: need radioButton interaction
   return "pending";
 }

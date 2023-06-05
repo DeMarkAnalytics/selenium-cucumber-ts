@@ -15,7 +15,11 @@ chromeOptions.addArguments("--headless");
 
 //export class World implements selcucWorld implements restWorld {
 export class World implements selcucWorld {
-  public driver = new Builder().forBrowser("chrome").setChromeOptions(chromeOptions).usingServer(process.env.SELENIUM_GRID).build();
+  public driver = new Builder()
+    .forBrowser("chrome")
+    .setChromeOptions(chromeOptions)
+    .usingServer(process.env.SELENIUM_GRID)
+    .build();
 }
 
 setWorldConstructor(World);

@@ -43,7 +43,10 @@ install `Cucumber (Cherkin) Full Support` plugin
 
 ```json
 {
-  "cucumberautocomplete.steps": ["features/step_definitions/**/*_steps.ts", "node_modules/@symbolik/selenium-cucumber-ts/step_definitions/**/*_steps.ts"],
+  "cucumberautocomplete.steps": [
+    "features/step_definitions/**/*_steps.ts",
+    "node_modules/@symbolik/selenium-cucumber-ts/step_definitions/**/*_steps.ts"
+  ],
   "cucumberautocomplete.smartSnippets": true,
   "cucumberautocomplete.stepsInvariants": true,
   "cucumberautocomplete.customParameters": [
@@ -57,12 +60,12 @@ install `Cucumber (Cherkin) Full Support` plugin
 
 ## Supported Steps
 
-* [Navigation Steps](docs/navigation.md)
-* [Assertion Steps](docs/pageAssertions.md)
-* [Input Steps](docs/inputs.md)
-* [Click Steps](docs/clicks.md)
-* [Progress Steps](docs/progress.md)
-* [Javascript Handling Steps](docs/javascript.md)
-* [Screenshot Steps](docs/screenshot.md)
-* [Configuration Steps](docs/configurations.md)
-* [Mobile Steps](docs/mobile.md)
+- [Navigation Steps](docs/navigation.md)
+- [Assertion Steps](docs/pageAssertions.md)
+- [Input Steps](docs/inputs.md)
+- [Click Steps](docs/clicks.md)
+- [Progress Steps](docs/progress.md)
+- [Javascript Handling Steps](docs/javascript.md)
+- [Screenshot Steps](docs/screenshot.md)
+- [Configuration Steps](docs/configurations.md)
+- [Mobile Steps](docs/mobile.md)

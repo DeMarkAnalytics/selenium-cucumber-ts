@@ -3,20 +3,29 @@ import { World } from "../world";
 import { waitForElementToBeLocated } from "./progress";
 let debugLog = require("debug")("elements");
 
-export function validateLocater(locator: string) {
-  let validLocators = ["id", "class", "css", "name", "xpath"];
-  if (validLocators.includes(locator)) {
-    return true;
-  } else {
-    return false;
-  }
+/**
+ * Selector types for scanning the DOM
+ * @date 5/19/2023 - 12:36:49 PM
+ *
+ * @export
+ * @typedef {SelectorType}
+ */
+export type SelectorType =
+  | "id" // Matches by element ID
+  | "name" // Matches by element name
+  | "xpath" // Matches using an XPath expression
+  | "css" // Matches using a CSS selector
+  | "class"; // Matches by class name
+
+export function isSelectorType(locator: string): locator is SelectorType {
+  return ["id", "class", "css", "name", "xpath"].includes(locator);
 }
 
 /**
  * Description: This function returns the locator for the element
  * @date 12/29/2022 - 12:06:10 PM
  *
- * @param {string} elementType - element type (id, name, xpath, class, css, link etc)
+ * @param {string} elementType - element type (id, name, xpath, class, css, etc)
  * @param {string} typeValue - value of the element type
  * @returns By
  */
@@ -38,12 +47,6 @@ export function elementLocator(elementType: string, typeValue: string) {
     case "css":
       retValue = By.css(typeValue);
       break;
-    case "link":
-      retValue = By.linkText(typeValue);
-      break;
-    case "partialLink":
-      retValue = By.partialLinkText(typeValue);
-      break;
   }
   return retValue;
 }
@@ -60,8 +63,21 @@ export function elementLocator(elementType: string, typeValue: string) {
  * @param {string} hasType
  * @returns Promise<string>
  */
-export async function getElementAttribute(self: World, elementType: string, typeValue: string, hasType: string) {
-  return await self.driver.findElement(elementLocator(elementType, typeValue)).getAttribute(hasType);
+export async function getElementAttribute(
+  self: World,
+  elementType: string,
+  typeValue: string,
+  attribute: string
+) {
+  const element = await self.driver.findElement(
+    elementLocator(elementType, typeValue)
+  );
+  const attributeValue = await element.getAttribute(attribute);
+  debugLog(
+    `Element ${elementType} ${typeValue} has attribute ${attribute} with value of ${attributeValue}`
+  );
+
+  return attributeValue;
 }
 
 /**
@@ -73,8 +89,14 @@ export async function getElementAttribute(self: World, elementType: string, type
  * @param {string} typeValue
  * @returns string
  */
-export async function getElementText(self: World, elementType: string, typeValue: string) {
+export async function getElementText(
+  self: World,
+  elementType: string,
+  typeValue: string
+) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`getting text of ${elementType} ${typeValue}`);
-  return await self.driver.findElement(elementLocator(elementType, typeValue)).getText();
+  return await self.driver
+    .findElement(elementLocator(elementType, typeValue))
+    .getText();
 }

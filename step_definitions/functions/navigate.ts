@@ -1,6 +1,7 @@
 import { World } from "../world";
 import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
+import dragAndDropScript from "html-dnd";
 let debugLog = require("debug")("navigate");
 
 /**
@@ -24,7 +25,7 @@ export async function navigateTo(self: World, url: string) {
  * @param {string} direction - direction to navigate (back or forward)
  * @returns Promise<void>
  */
-export async function navigate(self: World, direction: string) {
+export async function navigate(self: World, direction: "back" | "forward") {
   if (direction === "back") {
     debugLog("pressing back button");
     await self.driver.navigate().back();
@@ -43,7 +44,7 @@ export async function navigate(self: World, direction: string) {
  */
 export async function closeDriver(self: World) {
   debugLog("shutting down");
-  await self.driver.quit;
+  self.driver.quit;
 }
 
 /**
@@ -86,11 +87,17 @@ export async function getSystemModifierKey(self: World) {
  * @param {string} typeValue - value of the element type
  * @returns Promise<void>
  */
-export async function hoverOverElement(self: World, elementType: string, typeValue: string) {
+export async function hoverOverElement(
+  self: World,
+  elementType: string,
+  typeValue: string
+) {
   try {
     await waitForElementToBeLocated(self, elementType, typeValue, 6);
     debugLog(`hovering over ${elementType} ${typeValue}`);
-    const element = await self.driver.findElement(elementLocator(elementType, typeValue));
+    const element = await self.driver.findElement(
+      elementLocator(elementType, typeValue)
+    );
     await self.driver.actions().move({ origin: element }).perform();
   } catch (error) {
     console.error(`Failed to hover over element ${elementType} ${typeValue}`);
@@ -98,10 +105,49 @@ export async function hoverOverElement(self: World, elementType: string, typeVal
   }
 }
 
-export async function setWindowSize(self: World, width: number, height: number) {
-  await self.driver.manage().window().setRect({ x: 0, y: 0, width: width, height: height });
+export async function setWindowSize(
+  self: World,
+  width: number,
+  height: number
+) {
+  await self.driver
+    .manage()
+    .window()
+    .setRect({ x: 0, y: 0, width: width, height: height });
 }
 
 export async function maximizeWindow(self: World) {
   await self.driver.manage().window().maximize();
+}
+
+export async function dragAndDrop(
+  self: World,
+  sourceType: string,
+  sourceTypeValue: string,
+  targetType: string,
+  targetTypeValue: string
+) {
+  debugLog(
+    `dragging ${sourceType} ${sourceTypeValue} to ${targetType} ${targetTypeValue}`
+  );
+
+  const sourceElement = await self.driver.findElement(
+    elementLocator(sourceType, sourceTypeValue)
+  );
+  const targetElement = await self.driver.findElement(
+    elementLocator(targetType, targetTypeValue)
+  );
+
+  // Create an Actions instance
+  const actions = self.driver.actions({ bridge: true });
+
+  // Perform the drag and drop
+  //await actions.dragAndDrop(sourceElement, targetElement).perform();
+
+  // html-dnd workaround
+  await self.driver.executeScript(
+    dragAndDropScript.code,
+    sourceElement,
+    targetElement
+  );
 }
