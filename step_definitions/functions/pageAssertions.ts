@@ -62,7 +62,6 @@ export async function checkPartialTitle(
   const pageTitle = await getPageTitle(self);
   const regex = new RegExp(`.*${escapeRegExp(expected)}.*`);
 
-  console.log(`negate: "${negate}"`);
   if (negate === "" || negate === null) {
     debugLog(`checking ${pageTitle} contains ${expected}`);
     assert.match(pageTitle, regex);
