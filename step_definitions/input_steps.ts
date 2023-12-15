@@ -9,42 +9,38 @@ import {
 } from "./functions/elements";
 
 Then(
-  new RegExp(
-    `^I enter "(.*?)" into input field having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I enter "(.*?)" into input field having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     text: string,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.enterText(this, elementType, typeValue, text);
-  },
+  }
 );
 
 Then(
-  new RegExp(`^I clear input field having (${elementIdentifiers}) "(.*?)"$`),
+  /^I clear input field having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.clearText(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
-  new RegExp(
-    `^I select (.*?) option by (.*?) from dropdown having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I select (.*?) option by (.*?) from dropdown having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     option: string,
     optionType: string,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectOptionFromDropdown(
@@ -52,125 +48,117 @@ Then(
       elementType,
       typeValue,
       option,
-      optionType,
+      optionType
     );
-  },
+  }
 );
 
 Then(
-  new RegExp(
-    `^I select all options from multiselect dropdown having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I select all options from multiselect dropdown having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectAllOptionsFromMultiselectDropdown(
       this,
       elementType,
-      typeValue,
+      typeValue
     );
-  },
+  }
 );
 
 Then(
-  new RegExp(
-    `^I unselect all options from multiselect dropdown having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I unselect all options from multiselect dropdown having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.unselectAllOptionsFromMultiselectDropdown(
       this,
       elementType,
-      typeValue,
+      typeValue
     );
-  },
+  }
 );
 
 //  /^I check the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
 Then(
-  new RegExp(`^I check the checkbox having (${elementIdentifiers}) "(.*?)"$`),
+  /^I check the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.checkCheckbox(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
-  new RegExp(`^I uncheck the checkbox having (${elementIdentifiers}) "(.*?)"$`),
+  /^I uncheck the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.uncheckCheckbox(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
-  new RegExp(`^I toggle checkbox having (${elementIdentifiers}) "(.*?)"$`),
+  /^I toggle checkbox having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.toggleCheckbox(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
-  new RegExp(`^I select radio button having (${elementIdentifiers}) "(.*?)"$`),
+  /^I select radio button having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectRadioButton(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
-  new RegExp(
-    `^I select "(.*?)" option by (.*?) from radio button group having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I select "(.*?)" option by (.*?) from radio button group having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
     typeValue: string,
-    option: string,
+    option: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectOptionFromRadioButtonGroup(
       this,
       elementType,
       typeValue,
-      option,
+      option
     );
-  },
+  }
 );
 
 Then(
-  new RegExp(
-    `^I send the key (enter|backspace) to the element having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I send the key (enter|backspace) to the element having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     key: string,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
 
@@ -182,5 +170,5 @@ Then(
         await press.enter(this, elementType, typeValue);
         break;
     }
-  },
+  }
 );
