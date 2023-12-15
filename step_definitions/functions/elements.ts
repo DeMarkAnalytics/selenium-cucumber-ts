@@ -70,14 +70,14 @@ export async function getElementAttribute(
   self: World,
   elementType: string,
   typeValue: string,
-  attribute: string
+  attribute: string,
 ) {
   const element = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   const attributeValue = await element.getAttribute(attribute);
   debugLog(
-    `Element ${elementType} ${typeValue} has attribute ${attribute} with value of ${attributeValue}`
+    `Element ${elementType} ${typeValue} has attribute ${attribute} with value of ${attributeValue}`,
   );
 
   return attributeValue;
@@ -95,7 +95,7 @@ export async function getElementAttribute(
 export async function getElementText(
   self: World,
   elementType: string,
-  typeValue: string
+  typeValue: string,
 ) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
   debugLog(`getting text of ${elementType} ${typeValue}`);

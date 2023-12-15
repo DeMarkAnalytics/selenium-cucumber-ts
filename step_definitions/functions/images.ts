@@ -6,7 +6,7 @@ export async function compare(
   actualImageType: string,
   actualImageName: string,
   expectedImageType: string,
-  expectedImageName: string
+  expectedImageName: string,
 ) {
   debugLog("Pending");
   return "pending";

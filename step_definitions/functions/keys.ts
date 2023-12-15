@@ -16,7 +16,7 @@ let debugLog = require("debug")("keys");
 export async function backspace(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   if (!isSelectorType(elementType))
     throw new Error("elementType is not a valid selector type");
@@ -45,7 +45,7 @@ export async function backspace(
 export async function enter(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   if (!isSelectorType(elementType))
     throw new Error("elementType is not a valid selector type");
