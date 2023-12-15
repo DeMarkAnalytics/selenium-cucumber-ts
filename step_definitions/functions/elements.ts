@@ -3,6 +3,9 @@ import { World } from "../world";
 import { waitForElementToBeLocated } from "./progress";
 let debugLog = require("debug")("elements");
 
+export var elements = "element|button|link|menu item|selection|input";
+export var elementIdentifiers = "id|name|class|xpath|css";
+
 /**
  * Selector types for scanning the DOM
  * @date 5/19/2023 - 12:36:49 PM
