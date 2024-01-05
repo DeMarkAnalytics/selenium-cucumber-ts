@@ -12,16 +12,16 @@ export async function waitForElementToDisplay(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   debugLog(
-    `waiting ${seconds} for element ${elementType} ${typeValue} to display`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to display`,
   );
   await self.driver.wait(
     until.elementIsVisible(
-      await self.driver.findElement(elementLocator(elementType, typeValue))
+      await self.driver.findElement(elementLocator(elementType, typeValue)),
     ),
-    +seconds * 1000
+    +seconds * 1000,
   );
 }
 
@@ -29,14 +29,14 @@ export async function waitForElementToBeLocated(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   debugLog(
-    `waiting ${seconds} for element ${elementType} ${typeValue} to be located`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to be located`,
   );
   await self.driver.wait(
     until.elementLocated(elementLocator(elementType, typeValue)),
-    +seconds * 1000
+    +seconds * 1000,
   );
 }
 
@@ -44,10 +44,10 @@ export async function waitForElementToBeClickable(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   debugLog(
-    `waiting ${seconds} for element ${elementType} ${typeValue} to be clickable`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to be clickable`,
   );
   await waitForElementToBeLocated(self, elementType, typeValue, seconds);
   await waitForElementToDisplay(self, elementType, typeValue, seconds);
@@ -56,7 +56,7 @@ export async function waitForElementToBeClickable(
 export async function waitForTitleToBe(
   self: World,
   titleMatch: string,
-  seconds: number
+  seconds: number,
 ) {
   debugLog(`waiting ${seconds} for title to be ${titleMatch}`);
   await self.driver.wait(until.titleIs(titleMatch), +seconds * 1000);
@@ -65,7 +65,7 @@ export async function waitForTitleToBe(
 export async function getElementsCount(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ): Promise<number> {
   debugLog(`looking for ${elementType}: "${typeValue}"`);
   let elementCount = (

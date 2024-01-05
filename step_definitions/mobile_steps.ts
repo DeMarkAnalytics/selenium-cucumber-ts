@@ -9,10 +9,10 @@ Then(
     element1Type: string,
     type1Value: string,
     element2Type: string,
-    type2Value: string
+    type2Value: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -22,10 +22,10 @@ Then(
     xStart: string,
     yStart: string,
     xEnd: string,
-    yEnd: String
+    yEnd: String,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(/^I swipe left$/, async function (this: World) {
@@ -49,10 +49,10 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string
+    typeValue: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -60,10 +60,10 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string
+    typeValue: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -71,10 +71,10 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string
+    typeValue: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -82,38 +82,38 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string
+    typeValue: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
   /^I swipe co\-ordinates "(.*?)","(.*?)" to left$/,
   async function (this: World, x: string, y: string) {
     return "pending";
-  }
+  },
 );
 
 Then(
   /^I swipe co\-ordinates "(.*?)","(.*?)" to right$/,
   async function (this: World, x: string, y: string) {
     return "pending";
-  }
+  },
 );
 
 Then(
   /^I swipe co\-ordinates "(.*?)","(.*?)" to up$/,
   async function (this: World, x: string, y: string) {
     return "pending";
-  }
+  },
 );
 
 Then(
   /^I swipe co\-ordinates "(.*?)","(.*?)" to down$/,
   async function (this: World, x: string, y: string) {
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -121,10 +121,10 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string
+    typeValue: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -133,24 +133,24 @@ Then(
     this: World,
     elementType: string | SelectorType,
     typeValue: string,
-    seconds: string
+    seconds: string,
   ) {
     return "pending";
-  }
+  },
 );
 
 Then(
   /^I long tap on co\-ordinate "(.*?)","(.*?)"$/,
   async function (this: World, x: string, y: string) {
     return "pending";
-  }
+  },
 );
 
 Then(
   /^I long tap on co\-ordinate "(.*?)","(.*?)" for "(.*?)" sec$/,
   async function (this: World, x: string, y: string, seconds: string) {
     return "pending";
-  }
+  },
 );
 
 Then(/^I close app$/, async function (this: World) {
