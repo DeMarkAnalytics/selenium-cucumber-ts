@@ -154,3 +154,35 @@ export async function dragAndDrop(
     targetElement
   );
 }
+
+/**
+ * switch to the context of an iFrame in order to perform actions on elements within it.
+ *
+ * @export
+ * @async
+ * @param {World} self - Cucumber World object
+ * @param {string} iframeType - iframe type (id, name, xpath, class, css, link etc)
+ * @param {string} typeValue - value of the iframe type
+ */
+export async function switchToIframe(
+  self: World,
+  iframeType: string,
+  typeValue: string
+) {
+  await self.driver
+    .switchTo()
+    .frame(
+      await self.driver.findElement(elementLocator(iframeType, typeValue))
+    );
+}
+
+/**
+ * switch to the parent iFrame
+ *
+ * @export
+ * @async
+ * @param {World} self
+ */
+export async function switchToParentIframe(self: World) {
+  await self.driver.switchTo().parentFrame();
+}
