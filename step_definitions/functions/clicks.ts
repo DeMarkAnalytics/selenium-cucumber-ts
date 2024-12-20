@@ -1,6 +1,6 @@
 import { World } from "../world";
 import { elementLocator, SelectorType } from "./elements";
-import { waitForElementToBeClickable } from "./progress";
+import { waitForElementToBeClickable, duration } from "./progress";
 let debugLog = require("debug")("clicks");
 
 /**
@@ -19,14 +19,19 @@ export async function click(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const waitSecondsNum = parseInt(waitSeconds.toString());
+  const startTime = Date.now();
+
+  debugLog(
+    `clicking on ${elementType} ${typeValue} after waiting up to ${waitSeconds} seconds for it to be clickable`,
+  );
   await waitForElementToBeClickable(
     self,
     elementType,
     typeValue,
-    parseInt(`${waitSeconds}`),
+    waitSecondsNum,
   );
 
-  debugLog(`clicking on ${elementType} ${typeValue}`);
   try {
     // give a little time for the element to be located in case animations or other things are happening
     await self.driver
@@ -36,6 +41,8 @@ export async function click(
     console.error(`could not click on ${elementType} ${typeValue}`);
     throw error;
   }
+
+  duration("click", startTime, waitSecondsNum);
 }
 
 /**
@@ -56,6 +63,7 @@ export async function clickIfExists(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -71,6 +79,7 @@ export async function clickIfExists(
   } catch (error) {
     debugLog(`didn't find ${elementType} ${typeValue}`);
   }
+  duration("clickIfExists", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -89,6 +98,7 @@ export async function doubleClick(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -106,6 +116,7 @@ export async function doubleClick(
     console.error(`could not doubleClick on ${elementType} ${typeValue}`);
     throw error;
   }
+  duration("doubleClick", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -124,6 +135,7 @@ export async function rightClick(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -141,6 +153,7 @@ export async function rightClick(
     console.error(`could not rightClick on ${elementType} ${typeValue}`);
     throw error;
   }
+  duration("rightClick", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -159,6 +172,7 @@ export async function clickForcefully(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -176,6 +190,7 @@ export async function clickForcefully(
     console.error(`could not click forcefully on ${elementType} ${typeValue}`);
     throw error;
   }
+  duration("clickForcefully", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -194,6 +209,7 @@ export async function submit(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -210,4 +226,5 @@ export async function submit(
     console.error(`could not submit ${elementType} ${typeValue}`);
     throw error;
   }
+  duration("submit", startTime, parseInt(waitSeconds.toString()));
 }

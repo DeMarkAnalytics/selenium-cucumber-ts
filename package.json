@@ -1,6 +1,6 @@
 {
   "name": "@symbolik/selenium-cucumber-ts",
-  "version": "1.1.5",
+  "version": "1.1.19",
   "description": "",
   "scripts": {
     "build-local": "tsc -p tsconfig.node.json",
@@ -22,23 +22,23 @@
   },
   "homepage": "https://github.com/DeMarkAnalytics/selenium-cucumber-ts#readme",
   "devDependencies": {
-    "@cucumber/cucumber": "^10.0.1",
-    "@cucumber/messages": "^22.0.0",
-    "@cucumber/pretty-formatter": "^1.0.0",
-    "@types/node": "^20.10.4",
-    "@types/selenium-webdriver": "^4.1.21",
-    "chromedriver": "^120.0.0",
-    "geckodriver": "^4.3.0",
-    "selenium-webdriver": "^4.16.0",
+    "@cucumber/cucumber": "^11.1.1",
+    "@cucumber/messages": "^27.0.2",
+    "@cucumber/pretty-formatter": "^1.0.1",
+    "@types/node": "^22.10.2",
+    "@types/selenium-webdriver": "^4.1.27",
+    "chromedriver": "^131.0.4",
+    "geckodriver": "^5.0.0",
+    "selenium-webdriver": "^4.27.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.3.3"
+    "typescript": "^5.7.2"
   },
   "peerDependencies": {
     "@cucumber/cucumber": ">=8.0.0",
     "selenium-webdriver": ">=4.0.0"
   },
   "dependencies": {
-    "debug": "^4.3.4",
+    "debug": "^4.4.0",
     "html-dnd": "^1.2.1"
   }
 }

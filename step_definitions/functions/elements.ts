@@ -6,6 +6,14 @@ let debugLog = require("debug")("elements");
 export var elements = "element|button|link|menu item|selection|input";
 export var elementIdentifiers = "id|name|class|xpath|css";
 
+export function validateLocater(locator: string) {
+  if (elementIdentifiers.includes(locator)) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 /**
  * Selector types for scanning the DOM
  * @date 5/19/2023 - 12:36:49 PM
