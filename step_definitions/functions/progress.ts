@@ -25,6 +25,35 @@ export async function waitForElementToDisplay(
   );
 }
 
+export async function waitForElementWithRetry(
+  self: World,
+  elementType: string | SelectorType,
+  typeValue: string,
+  seconds: number,
+  retries: number = 2,
+) {
+  let attempt = 0;
+
+  while (attempt < retries) {
+    try {
+      attempt++;
+      debugLog(`Attempt ${attempt} to find element ${elementType} ${typeValue}`);
+      await waitForElementToDisplay(self, elementType, typeValue, seconds);
+      debugLog(`Element ${elementType} ${typeValue} found on attempt ${attempt}`);
+      return;
+    } catch (error) {
+      debugLog(
+        `Attempt ${attempt} failed: ${error}. Retrying (${attempt}/${retries})...`,
+      );
+      if (attempt >= retries) {
+        throw new Error(
+          `Failed to find element ${elementType} ${typeValue} after ${retries} attempts.`,
+        );
+      }
+    }
+  }
+}
+
 export async function waitForElementToBeLocated(
   self: World,
   elementType: string | SelectorType,
