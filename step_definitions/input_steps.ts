@@ -9,9 +9,7 @@ import {
 } from "./functions/elements";
 
 Then(
-  new RegExp(
-    `^I enter "(.*?)" into input field having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I enter "(.*?)" into input field having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     text: string,
@@ -24,7 +22,7 @@ Then(
 );
 
 Then(
-  new RegExp(`^I clear input field having (${elementIdentifiers}) "(.*?)"$`),
+  /^I clear input field having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,

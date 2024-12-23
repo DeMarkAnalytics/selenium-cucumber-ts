@@ -217,9 +217,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^actual image having (.+?) "(.*?)" and expected image having (${elementIdentifiers}) "(.*?)" should be similar$`,
-  ),
+  /^actual image having (id|name|class|xpath|css) "(.*?)" and expected image having (id|name|class|xpath|css) "(.*?)" should be similar$/,
   async function (
     this: World,
     actualImageType: string,
