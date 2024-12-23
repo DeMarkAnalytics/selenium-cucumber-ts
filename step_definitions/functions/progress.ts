@@ -37,9 +37,13 @@ export async function waitForElementWithRetry(
   while (attempt < retries) {
     try {
       attempt++;
-      debugLog(`Attempt ${attempt} to find element ${elementType} ${typeValue}`);
+      debugLog(
+        `Attempt ${attempt} to find element ${elementType} ${typeValue}`,
+      );
       await waitForElementToDisplay(self, elementType, typeValue, seconds);
-      debugLog(`Element ${elementType} ${typeValue} found on attempt ${attempt}`);
+      debugLog(
+        `Element ${elementType} ${typeValue} found on attempt ${attempt}`,
+      );
       return;
     } catch (error) {
       debugLog(
