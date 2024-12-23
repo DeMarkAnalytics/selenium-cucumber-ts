@@ -12,17 +12,17 @@ export async function waitForElementToDisplay(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   const startTime = Date.now();
   debugLog(
-    `waiting ${seconds} seconds for element ${elementType} ${typeValue} to display`
+    `waiting ${seconds} seconds for element ${elementType} ${typeValue} to display`,
   );
   await self.driver.wait(
     until.elementIsVisible(
-      await self.driver.findElement(elementLocator(elementType, typeValue))
+      await self.driver.findElement(elementLocator(elementType, typeValue)),
     ),
-    +seconds * 1000
+    +seconds * 1000,
   );
   duration("wait for element to display", startTime, seconds);
 }
@@ -31,17 +31,17 @@ export async function waitForElementToBeLocated(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   const secondsNum = parseInt(seconds.toString());
   const startTime = Date.now();
 
   debugLog(
-    `waiting ${seconds} for element ${elementType} ${typeValue} to be located`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to be located`,
   );
   await self.driver.wait(
     until.elementLocated(elementLocator(elementType, typeValue)),
-    secondsNum * 1000
+    secondsNum * 1000,
   );
 
   duration("wait for element to be located", startTime, secondsNum);
@@ -51,11 +51,11 @@ export async function waitForElementToBeClickable(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   const startTime = Date.now();
   debugLog(
-    `waiting ${seconds} for element ${elementType} ${typeValue} to be clickable`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to be clickable`,
   );
   await waitForElementToBeLocated(self, elementType, typeValue, seconds);
   // sometimes you want to click on something that isn't visible yet ¯\_(ツ)_/¯
@@ -67,7 +67,7 @@ export async function waitForElementToBeClickable(
 export async function waitForTitleToBe(
   self: World,
   titleMatch: string,
-  seconds: number
+  seconds: number,
 ) {
   const startTime = Date.now();
   debugLog(`waiting ${seconds} for title to be ${titleMatch}`);
@@ -78,7 +78,7 @@ export async function waitForTitleToBe(
 export async function getElementsCount(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ): Promise<number> {
   debugLog(`looking for ${elementType}: "${typeValue}"`);
   let elementCount = (
@@ -95,6 +95,6 @@ export function duration(message: string, startTime: number, waitTime: number) {
 
   debugLog(
     `${message} completed. Actual time taken: ${actualDurationSec} seconds. ` +
-      `Configured wait time: ${waitTime} seconds.`
+      `Configured wait time: ${waitTime} seconds.`,
   );
 }
