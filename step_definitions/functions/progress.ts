@@ -13,18 +13,18 @@ export async function waitForElementToDisplay(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   const startTime = Date.now();
   debugLog(
     self,
-    `waiting ${seconds} seconds for element ${elementType} ${typeValue} to display`
+    `waiting ${seconds} seconds for element ${elementType} ${typeValue} to display`,
   );
   await self.driver.wait(
     until.elementIsVisible(
-      await self.driver.findElement(elementLocator(elementType, typeValue))
+      await self.driver.findElement(elementLocator(elementType, typeValue)),
     ),
-    +seconds * 1000
+    +seconds * 1000,
   );
   duration(self, "wait for element to display", startTime, seconds);
 }
@@ -34,7 +34,7 @@ export async function waitForElementWithRetry(
   elementType: string | SelectorType,
   typeValue: string,
   seconds: number,
-  retries: number = 2
+  retries: number = 2,
 ) {
   let attempt = 0;
 
@@ -43,22 +43,22 @@ export async function waitForElementWithRetry(
       attempt++;
       debugLog(
         self,
-        `Attempt ${attempt} to find element ${elementType} ${typeValue}`
+        `Attempt ${attempt} to find element ${elementType} ${typeValue}`,
       );
       await waitForElementToDisplay(self, elementType, typeValue, seconds);
       debugLog(
         self,
-        `Element ${elementType} ${typeValue} found on attempt ${attempt}`
+        `Element ${elementType} ${typeValue} found on attempt ${attempt}`,
       );
       return;
     } catch (error) {
       debugLog(
         self,
-        `Attempt ${attempt} failed: ${error}. Retrying (${attempt}/${retries})...`
+        `Attempt ${attempt} failed: ${error}. Retrying (${attempt}/${retries})...`,
       );
       if (attempt >= retries) {
         throw new Error(
-          `Failed to find element ${elementType} ${typeValue} after ${retries} attempts.`
+          `Failed to find element ${elementType} ${typeValue} after ${retries} attempts.`,
         );
       }
     }
@@ -69,18 +69,18 @@ export async function waitForElementToBeLocated(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   const secondsNum = parseInt(seconds.toString());
   const startTime = Date.now();
 
   debugLog(
     self,
-    `waiting ${seconds} for element ${elementType} ${typeValue} to be located`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to be located`,
   );
   await self.driver.wait(
     until.elementLocated(elementLocator(elementType, typeValue)),
-    secondsNum * 1000
+    secondsNum * 1000,
   );
 
   duration(self, "wait for element to be located", startTime, secondsNum);
@@ -90,12 +90,12 @@ export async function waitForElementToBeClickable(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  seconds: number
+  seconds: number,
 ) {
   const startTime = Date.now();
   debugLog(
     self,
-    `waiting ${seconds} for element ${elementType} ${typeValue} to be clickable`
+    `waiting ${seconds} for element ${elementType} ${typeValue} to be clickable`,
   );
   await waitForElementToBeLocated(self, elementType, typeValue, seconds);
   // sometimes you want to click on something that isn't visible yet ¯\_(ツ)_/¯
@@ -107,7 +107,7 @@ export async function waitForElementToBeClickable(
 export async function waitForTitleToBe(
   self: World,
   titleMatch: string,
-  seconds: number
+  seconds: number,
 ) {
   const startTime = Date.now();
   debugLog(self, `waiting ${seconds} for title to be ${titleMatch}`);
@@ -118,7 +118,7 @@ export async function waitForTitleToBe(
 export async function getElementsCount(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ): Promise<number> {
   debugLog(self, `looking for ${elementType}: "${typeValue}"`);
   let elementCount = (
@@ -132,7 +132,7 @@ export function duration(
   self: World,
   message: string,
   startTime: number,
-  waitTime: number
+  waitTime: number,
 ) {
   const endTime = Date.now();
   const actualDurationMs = endTime - startTime;
@@ -141,6 +141,6 @@ export function duration(
   debugLog(
     self,
     `${message} completed. Actual time taken: ${actualDurationSec} seconds. ` +
-      `Configured wait time: ${waitTime} seconds.`
+      `Configured wait time: ${waitTime} seconds.`,
   );
 }

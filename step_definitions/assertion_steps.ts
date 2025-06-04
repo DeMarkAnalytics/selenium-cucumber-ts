@@ -7,7 +7,7 @@ Then(
   async function (this: World, negate: string, title: string) {
     negate = negate?.trim();
     await page.checkTitle(this, title, negate);
-  }
+  },
 );
 
 Then(
@@ -15,7 +15,7 @@ Then(
   async function (this: World, negate: string, title: string) {
     negate = negate?.trim();
     await page.checkPartialTitle(this, title, negate);
-  }
+  },
 );
 
 Then(
@@ -25,7 +25,7 @@ Then(
     elementType: string,
     typeValue: string,
     negate: string,
-    textContent: string
+    textContent: string,
   ) {
     negate = negate?.trim();
     await page.checkElementText(
@@ -33,9 +33,9 @@ Then(
       elementType,
       typeValue,
       textContent,
-      negate
+      negate,
     );
-  }
+  },
 );
 
 Then(
@@ -45,7 +45,7 @@ Then(
     elementType: string,
     typeValue: string,
     negate: string,
-    textContent: string
+    textContent: string,
   ) {
     negate = negate?.trim();
     await page.checkElementPartialText(
@@ -53,9 +53,9 @@ Then(
       elementType,
       typeValue,
       textContent,
-      negate
+      negate,
     );
-  }
+  },
 );
 
 Then(
@@ -66,7 +66,7 @@ Then(
     typeValue: string,
     negate: string,
     hasType: string,
-    hasTypeValue: string
+    hasTypeValue: string,
   ) {
     negate = negate?.trim();
     await page.checkElementAttribute(
@@ -75,9 +75,9 @@ Then(
       typeValue,
       hasType,
       hasTypeValue,
-      negate
+      negate,
     );
-  }
+  },
 );
 
 Then(
@@ -87,11 +87,11 @@ Then(
     elementType: string,
     typeValue: string,
     negate: string,
-    status: string
+    status: string,
   ) {
     negate = negate?.trim();
     await page.checkElementEnable(this, elementType, typeValue, status, negate);
-  }
+  },
 );
 
 Then(
@@ -100,11 +100,11 @@ Then(
     this: World,
     elementType: string,
     typeValue: string,
-    negate: string
+    negate: string,
   ) {
     negate = negate?.trim();
     await page.checkElementPresence(this, elementType, typeValue, negate);
-  }
+  },
 );
 
 Then(
@@ -113,10 +113,10 @@ Then(
     this: World,
     elementType: string,
     typeValue: string,
-    state: string
+    state: string,
   ) {
     await page.assertCheckboxChecked(this, elementType, typeValue, state);
-  }
+  },
 );
 
 Then(
@@ -125,11 +125,11 @@ Then(
     this: World,
     elementType: string,
     typeValue: string,
-    state: string
+    state: string,
   ) {
     // TODO: test radio button selection this is untested
     await page.assertRadioButtonSelected(this, elementType, typeValue, state);
-  }
+  },
 );
 
 Then(
@@ -140,7 +140,7 @@ Then(
     optionAttribute: string,
     elementType: string,
     typeValue: string,
-    state: string
+    state: string,
   ) {
     await page.assertOptionFromRadioButtonGroupSelected(
       this,
@@ -148,10 +148,10 @@ Then(
       typeValue,
       option,
       optionAttribute,
-      state
+      state,
     );
     return "pending";
-  }
+  },
 );
 
 Then(
@@ -159,7 +159,7 @@ Then(
   async function (this: World, text: string, negate: string) {
     negate = negate?.trim();
     await page.checkElementPresence(this, "link", text, negate);
-  }
+  },
 );
 
 Then(
@@ -167,14 +167,14 @@ Then(
   async function (this: World, text: string, negate: string) {
     negate = negate?.trim();
     await page.checkElementPresence(this, "partialLink", text, negate);
-  }
+  },
 );
 
 Then(
   /^I should see alert text as "(.*?)"$/,
   async function (this: World, text: string) {
     await page.checkAlertText(this, text);
-  }
+  },
 );
 
 Then(
@@ -185,16 +185,16 @@ Then(
     optionAttribute: string,
     elementType: string,
     typeValue: string,
-    state: string
+    state: string,
   ) {
     return "pending";
     await page.assertOptionFromDropDownSelected(
       this,
       option,
       optionAttribute,
-      state
+      state,
     );
-  }
+  },
 );
 
 Then(
@@ -204,16 +204,16 @@ Then(
     actualImageType: string,
     actualImageName: string,
     expectedImageType: string,
-    expectedImageName: string
+    expectedImageName: string,
   ) {
     await page.isImageSimilar(
       this,
       actualImageType,
       actualImageName,
       expectedImageType,
-      expectedImageName
+      expectedImageName,
     );
     // TODO
     return "pending";
-  }
+  },
 );

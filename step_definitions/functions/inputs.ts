@@ -18,7 +18,7 @@ export async function enterText(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  text: string
+  text: string,
 ) {
   debugLog(self, `Entering text into ${elementType} ${typeValue}`);
   await (await self.driver)
@@ -38,7 +38,7 @@ export async function enterText(
 export async function clearText(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(self, `clearing text from ${elementType} ${typeValue}`);
   await self.driver.findElement(elementLocator(elementType, typeValue)).clear();
@@ -71,23 +71,23 @@ export async function selectOptionFromDropdown(
   elementType: string | SelectorType,
   typeValue: string,
   option: string | number,
-  optionType: string = "value"
+  optionType: string = "value",
 ) {
   debugLog(
     self,
-    `selecting option ${option} from dropdown ${elementType} ${typeValue}`
+    `selecting option ${option} from dropdown ${elementType} ${typeValue}`,
   );
   const xpathOption =
     optionType !== "index" ? `@${optionType}=${option}` : option;
   let dropdown = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   await dropdown.click();
   let chosenOption = await self.driver.findElement(
     elementLocator(
       "xpath",
-      `//select[@${elementType}=\'${typeValue}\']/option[${xpathOption}]`
-    )
+      `//select[@${elementType}=\'${typeValue}\']/option[${xpathOption}]`,
+    ),
   );
   await chosenOption.click();
 }
@@ -105,14 +105,14 @@ export async function selectOptionFromDropdown(
 export async function selectAllOptionsFromMultiselectDropdown(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(
     self,
-    `selecting all options from dropdown ${elementType} ${typeValue}`
+    `selecting all options from dropdown ${elementType} ${typeValue}`,
   );
   let dropdown = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   //TODO: finish dropdown interaction
   return "pending";
@@ -131,14 +131,14 @@ export async function selectAllOptionsFromMultiselectDropdown(
 export async function unselectAllOptionsFromMultiselectDropdown(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(
     self,
-    `unselecting all options from dropdown ${elementType} ${typeValue}`
+    `unselecting all options from dropdown ${elementType} ${typeValue}`,
   );
   let dropdown = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   //TODO: finish dropdown interaction
   return "pending";
@@ -157,11 +157,11 @@ export async function unselectAllOptionsFromMultiselectDropdown(
 export async function checkCheckbox(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(self, `checking checkbox ${elementType} ${typeValue}`);
   let checkbox = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   if (!checkbox.isSelected()) {
     await checkbox.click();
@@ -183,11 +183,11 @@ export async function checkCheckbox(
 export async function uncheckCheckbox(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(self, `unchecking checkbox ${elementType} ${typeValue}`);
   let checkbox = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   if (checkbox.isSelected()) {
     await checkbox.click();
@@ -209,11 +209,11 @@ export async function uncheckCheckbox(
 export async function toggleCheckbox(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(self, `toggle checkbox ${elementType} ${typeValue}`);
   let checkbox = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   await checkbox.click();
   //TODO: need checkbox checking test
@@ -233,11 +233,11 @@ export async function toggleCheckbox(
 export async function selectRadioButton(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(self, `select Radio button ${elementType} ${typeValue}`);
   let radioButton = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   if (!radioButton.isSelected()) {
     await radioButton.click();
@@ -259,11 +259,11 @@ export async function selectRadioButton(
 export async function unselectRadioButton(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string
+  typeValue: string,
 ) {
   debugLog(self, `unselect Radio button ${elementType} ${typeValue}`);
   let radioButton = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   if (radioButton.isSelected()) {
     await radioButton.click();
@@ -287,11 +287,11 @@ export async function selectOptionFromRadioButtonGroup(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  option: string
+  option: string,
 ) {
   debugLog(self, `select Radio button ${elementType} ${typeValue}`);
   let radioButtonGroup = await self.driver.findElement(
-    elementLocator(elementType, typeValue)
+    elementLocator(elementType, typeValue),
   );
   //TODO: need radioButton interaction
   return "pending";

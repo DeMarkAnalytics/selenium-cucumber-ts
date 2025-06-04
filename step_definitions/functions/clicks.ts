@@ -18,20 +18,20 @@ export async function click(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6"
+  waitSeconds: number | string = "6",
 ) {
   const waitSecondsNum = parseInt(waitSeconds.toString());
   const startTime = Date.now();
 
   debugLog(
     self,
-    `clicking on ${elementType} ${typeValue} after waiting up to ${waitSeconds} seconds for it to be clickable`
+    `clicking on ${elementType} ${typeValue} after waiting up to ${waitSeconds} seconds for it to be clickable`,
   );
   await waitForElementToBeClickable(
     self,
     elementType,
     typeValue,
-    waitSecondsNum
+    waitSecondsNum,
   );
 
   try {
@@ -63,7 +63,7 @@ export async function clickIfExists(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6"
+  waitSeconds: number | string = "6",
 ) {
   const startTime = Date.now();
   try {
@@ -71,12 +71,12 @@ export async function clickIfExists(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString())
+      parseInt(waitSeconds.toString()),
     );
 
     debugLog(
       self,
-      `looking for ${waitSeconds} seconds to click on ${elementType} ${typeValue}`
+      `looking for ${waitSeconds} seconds to click on ${elementType} ${typeValue}`,
     );
     await click(self, elementType as SelectorType, typeValue);
   } catch (error) {
@@ -99,7 +99,7 @@ export async function doubleClick(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6"
+  waitSeconds: number | string = "6",
 ) {
   const startTime = Date.now();
   try {
@@ -107,12 +107,12 @@ export async function doubleClick(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString())
+      parseInt(waitSeconds.toString()),
     );
 
     debugLog(self, `doubleClicking on ${elementType} ${typeValue}`);
     let doubleClickElement = await self.driver.findElement(
-      elementLocator(elementType, typeValue)
+      elementLocator(elementType, typeValue),
     );
     await self.driver.actions().doubleClick(doubleClickElement).perform();
   } catch (error) {
@@ -136,7 +136,7 @@ export async function rightClick(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6"
+  waitSeconds: number | string = "6",
 ) {
   const startTime = Date.now();
   try {
@@ -144,12 +144,12 @@ export async function rightClick(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString())
+      parseInt(waitSeconds.toString()),
     );
 
     debugLog(self, `rightClicking on ${elementType} ${typeValue}`);
     let rightClickElement = await self.driver.findElement(
-      elementLocator(elementType, typeValue)
+      elementLocator(elementType, typeValue),
     );
     await self.driver.actions().contextClick(rightClickElement).perform();
   } catch (error) {
@@ -173,7 +173,7 @@ export async function clickForcefully(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6"
+  waitSeconds: number | string = "6",
 ) {
   const startTime = Date.now();
   try {
@@ -181,12 +181,12 @@ export async function clickForcefully(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString())
+      parseInt(waitSeconds.toString()),
     );
 
     debugLog(self, `clicking forcefully on ${elementType} ${typeValue}`);
     let forceClickElement = await self.driver.findElement(
-      elementLocator(elementType, typeValue)
+      elementLocator(elementType, typeValue),
     );
     await self.driver.executeScript("arguments[0]click();", forceClickElement);
   } catch (error) {
@@ -197,7 +197,7 @@ export async function clickForcefully(
     self,
     "clickForcefully",
     startTime,
-    parseInt(waitSeconds.toString())
+    parseInt(waitSeconds.toString()),
   );
 }
 
@@ -215,7 +215,7 @@ export async function submit(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6"
+  waitSeconds: number | string = "6",
 ) {
   const startTime = Date.now();
   try {
@@ -223,7 +223,7 @@ export async function submit(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString())
+      parseInt(waitSeconds.toString()),
     );
 
     debugLog(self, `submitting ${elementType} ${typeValue}`);
