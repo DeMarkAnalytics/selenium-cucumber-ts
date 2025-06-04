@@ -43,9 +43,18 @@ export async function clearText(
   await self.driver.findElement(elementLocator(elementType, typeValue)).clear();
   // clear() doesn't work in all browsers
   // https://stackoverflow.com/questions/7732125/clear-text-from-textarea-with-selenium
-  await self.driver
-    .findElement(elementLocator(elementType, typeValue))
-    .sendKeys(Key.CONTROL + "a");
+
+  // Check if we're on a mac
+  if (process.platform == "darwin") {
+    await self.driver
+      .findElement(elementLocator(elementType, typeValue))
+      .sendKeys(Key.COMMAND + "a");
+  } else {
+    await self.driver
+      .findElement(elementLocator(elementType, typeValue))
+      .sendKeys(Key.CONTROL + "a");
+  }
+
   await self.driver
     .findElement(elementLocator(elementType, typeValue))
     .sendKeys(Key.DELETE);
