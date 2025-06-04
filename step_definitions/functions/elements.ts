@@ -1,7 +1,8 @@
 import { By } from "selenium-webdriver";
 import { World } from "../world";
 import { waitForElementToBeLocated } from "./progress";
-let debugLog = require("debug")("elements");
+import createLogger from "./debugLogs";
+let debugLog = createLogger("elements");
 
 var elements = "element|button|link|menu item|selection|input";
 var elementIdentifiers = "id|name|class|xpath|css";
@@ -93,6 +94,7 @@ export async function getElementAttribute(
   );
   const attributeValue = await element.getAttribute(attribute);
   debugLog(
+    self,
     `Element ${elementType} ${typeValue} has attribute ${attribute} with value of ${attributeValue}`
   );
 
@@ -114,7 +116,7 @@ export async function getElementText(
   typeValue: string
 ) {
   await waitForElementToBeLocated(self, elementType, typeValue, 4);
-  debugLog(`getting text of ${elementType} ${typeValue}`);
+  debugLog(self, `getting text of ${elementType} ${typeValue}`);
   return await self.driver
     .findElement(elementLocator(elementType, typeValue))
     .getText();

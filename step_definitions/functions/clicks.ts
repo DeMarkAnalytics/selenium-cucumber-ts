@@ -1,7 +1,8 @@
 import { World } from "../world";
 import { elementLocator, SelectorType } from "./elements";
 import { waitForElementToBeClickable, duration } from "./progress";
-let debugLog = require("debug")("clicks");
+import createLogger from "./debugLogs";
+let debugLog = createLogger("clicks");
 
 /**
  * Description: Clicks on an element
@@ -17,19 +18,20 @@ export async function click(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6",
+  waitSeconds: number | string = "6"
 ) {
   const waitSecondsNum = parseInt(waitSeconds.toString());
   const startTime = Date.now();
 
   debugLog(
-    `clicking on ${elementType} ${typeValue} after waiting up to ${waitSeconds} seconds for it to be clickable`,
+    self,
+    `clicking on ${elementType} ${typeValue} after waiting up to ${waitSeconds} seconds for it to be clickable`
   );
   await waitForElementToBeClickable(
     self,
     elementType,
     typeValue,
-    waitSecondsNum,
+    waitSecondsNum
   );
 
   try {
@@ -42,7 +44,7 @@ export async function click(
     throw error;
   }
 
-  duration("click", startTime, waitSecondsNum);
+  duration(self, "click", startTime, waitSecondsNum);
 }
 
 /**
@@ -61,7 +63,7 @@ export async function clickIfExists(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6",
+  waitSeconds: number | string = "6"
 ) {
   const startTime = Date.now();
   try {
@@ -69,17 +71,18 @@ export async function clickIfExists(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString()),
+      parseInt(waitSeconds.toString())
     );
 
     debugLog(
-      `looking for ${waitSeconds} seconds to click on ${elementType} ${typeValue}`,
+      self,
+      `looking for ${waitSeconds} seconds to click on ${elementType} ${typeValue}`
     );
     await click(self, elementType as SelectorType, typeValue);
   } catch (error) {
-    debugLog(`didn't find ${elementType} ${typeValue}`);
+    debugLog(self, `didn't find ${elementType} ${typeValue}`);
   }
-  duration("clickIfExists", startTime, parseInt(waitSeconds.toString()));
+  duration(self, "clickIfExists", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -96,7 +99,7 @@ export async function doubleClick(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6",
+  waitSeconds: number | string = "6"
 ) {
   const startTime = Date.now();
   try {
@@ -104,19 +107,19 @@ export async function doubleClick(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString()),
+      parseInt(waitSeconds.toString())
     );
 
-    debugLog(`doubleClicking on ${elementType} ${typeValue}`);
+    debugLog(self, `doubleClicking on ${elementType} ${typeValue}`);
     let doubleClickElement = await self.driver.findElement(
-      elementLocator(elementType, typeValue),
+      elementLocator(elementType, typeValue)
     );
     await self.driver.actions().doubleClick(doubleClickElement).perform();
   } catch (error) {
     console.error(`could not doubleClick on ${elementType} ${typeValue}`);
     throw error;
   }
-  duration("doubleClick", startTime, parseInt(waitSeconds.toString()));
+  duration(self, "doubleClick", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -133,7 +136,7 @@ export async function rightClick(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6",
+  waitSeconds: number | string = "6"
 ) {
   const startTime = Date.now();
   try {
@@ -141,19 +144,19 @@ export async function rightClick(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString()),
+      parseInt(waitSeconds.toString())
     );
 
-    debugLog(`rightClicking on ${elementType} ${typeValue}`);
+    debugLog(self, `rightClicking on ${elementType} ${typeValue}`);
     let rightClickElement = await self.driver.findElement(
-      elementLocator(elementType, typeValue),
+      elementLocator(elementType, typeValue)
     );
     await self.driver.actions().contextClick(rightClickElement).perform();
   } catch (error) {
     console.error(`could not rightClick on ${elementType} ${typeValue}`);
     throw error;
   }
-  duration("rightClick", startTime, parseInt(waitSeconds.toString()));
+  duration(self, "rightClick", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -170,7 +173,7 @@ export async function clickForcefully(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6",
+  waitSeconds: number | string = "6"
 ) {
   const startTime = Date.now();
   try {
@@ -178,19 +181,24 @@ export async function clickForcefully(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString()),
+      parseInt(waitSeconds.toString())
     );
 
-    debugLog(`clicking forcefully on ${elementType} ${typeValue}`);
+    debugLog(self, `clicking forcefully on ${elementType} ${typeValue}`);
     let forceClickElement = await self.driver.findElement(
-      elementLocator(elementType, typeValue),
+      elementLocator(elementType, typeValue)
     );
     await self.driver.executeScript("arguments[0]click();", forceClickElement);
   } catch (error) {
     console.error(`could not click forcefully on ${elementType} ${typeValue}`);
     throw error;
   }
-  duration("clickForcefully", startTime, parseInt(waitSeconds.toString()));
+  duration(
+    self,
+    "clickForcefully",
+    startTime,
+    parseInt(waitSeconds.toString())
+  );
 }
 
 /**
@@ -207,7 +215,7 @@ export async function submit(
   self: World,
   elementType: string | SelectorType,
   typeValue: string,
-  waitSeconds: number | string = "6",
+  waitSeconds: number | string = "6"
 ) {
   const startTime = Date.now();
   try {
@@ -215,10 +223,10 @@ export async function submit(
       self,
       elementType,
       typeValue,
-      parseInt(waitSeconds.toString()),
+      parseInt(waitSeconds.toString())
     );
 
-    debugLog(`submitting ${elementType} ${typeValue}`);
+    debugLog(self, `submitting ${elementType} ${typeValue}`);
     await self.driver
       .findElement(elementLocator(elementType, typeValue))
       .submit();
@@ -226,5 +234,5 @@ export async function submit(
     console.error(`could not submit ${elementType} ${typeValue}`);
     throw error;
   }
-  duration("submit", startTime, parseInt(waitSeconds.toString()));
+  duration(self, "submit", startTime, parseInt(waitSeconds.toString()));
 }
