@@ -3,6 +3,7 @@ import { World } from "./world";
 import * as input from "./functions/inputs";
 import * as press from "./functions/keys";
 import { SelectorType, isSelectorType } from "./functions/elements";
+import { IKey, Key } from "selenium-webdriver/lib/input";
 
 Then(
   /^I enter "(.*?)" into input field having (id|name|class|xpath|css) "(.*?)"$/,
@@ -10,11 +11,29 @@ Then(
     this: World,
     text: string,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.enterText(this, elementType, typeValue, text);
-  },
+  }
+);
+
+Then(
+  /^I enter the text "(.*)" into the currently selected element/,
+  async function (this: World, key: string) {
+    this.driver.actions({ async: false, bridge: true }).sendKeys(key).perform();
+  }
+);
+
+Then(
+  /^I press the "(ENTER|BACK_SPACE|ARROW_UP|ARROW_DOWN|ARROW_LEFT|ARROW_RIGHT)" key$/,
+  async function (this: World, key: "ENTER" | "BACK_SPACE" | "ARROW_UP" | "ARROW_DOWN" | "ARROW_LEFT" | "ARROW_RIGHT") {
+    const keyName: keyof IKey = key;
+
+    let actions = this.driver.actions({ async: false, bridge: true });
+    this.driver.actions({ async: false, bridge: true }).sendKeys(Key["ENTER"]).perform();
+    actions.sendKeys(Key[keyName]).perform();
+  }
 );
 
 Then(
@@ -22,11 +41,11 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.clearText(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
@@ -36,7 +55,7 @@ Then(
     option: string,
     optionType: string,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectOptionFromDropdown(
@@ -44,9 +63,9 @@ Then(
       elementType,
       typeValue,
       option,
-      optionType,
+      optionType
     );
-  },
+  }
 );
 
 Then(
@@ -54,15 +73,15 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectAllOptionsFromMultiselectDropdown(
       this,
       elementType,
-      typeValue,
+      typeValue
     );
-  },
+  }
 );
 
 Then(
@@ -70,15 +89,15 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.unselectAllOptionsFromMultiselectDropdown(
       this,
       elementType,
-      typeValue,
+      typeValue
     );
-  },
+  }
 );
 
 //  /^I check the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
@@ -87,11 +106,11 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.checkCheckbox(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
@@ -99,11 +118,11 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.uncheckCheckbox(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
@@ -111,11 +130,11 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.toggleCheckbox(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
@@ -123,11 +142,11 @@ Then(
   async function (
     this: World,
     elementType: string | SelectorType | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectRadioButton(this, elementType, typeValue);
-  },
+  }
 );
 
 Then(
@@ -136,16 +155,16 @@ Then(
     this: World,
     elementType: string | SelectorType,
     typeValue: string,
-    option: string,
+    option: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.selectOptionFromRadioButtonGroup(
       this,
       elementType,
       typeValue,
-      option,
+      option
     );
-  },
+  }
 );
 
 Then(
@@ -154,7 +173,7 @@ Then(
     this: World,
     key: string,
     elementType: string | SelectorType,
-    typeValue: string,
+    typeValue: string
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
 
@@ -166,5 +185,5 @@ Then(
         await press.enter(this, elementType, typeValue);
         break;
     }
-  },
+  }
 );

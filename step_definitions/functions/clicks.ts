@@ -2,6 +2,7 @@ import { World } from "../world";
 import { elementLocator, SelectorType } from "./elements";
 import { waitForElementToBeClickable, duration } from "./progress";
 import createLogger from "./debugLogs";
+import { WebElement } from "selenium-webdriver";
 let debugLog = createLogger("clicks");
 
 /**
@@ -235,4 +236,14 @@ export async function submit(
     throw error;
   }
   duration(self, "submit", startTime, parseInt(waitSeconds.toString()));
+}
+
+export async function mouseOver(self: World, element: WebElement) {
+  const actions = self.driver.actions({ async: false, bridge: true });
+  await actions.move({ origin: element }).perform();
+}
+
+export async function mouseOverAndClick(self: World, element: WebElement) {
+  const actions = self.driver.actions({ async: false, bridge: true });
+  await actions.move({ origin: element }).click().perform();
 }
