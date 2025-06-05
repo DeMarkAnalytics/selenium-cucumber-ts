@@ -17,7 +17,7 @@ let debugLog = createLogger("keys");
 export async function backspace(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string,
+  typeValue: string
 ) {
   if (!isSelectorType(elementType))
     throw new Error("elementType is not a valid selector type");
@@ -29,7 +29,9 @@ export async function backspace(
       .findElement(elementLocator(elementType, typeValue))
       .sendKeys(Key.BACK_SPACE);
   } catch (error) {
-    console.error(`could not sending backspace to ${elementType} ${typeValue}`);
+    error.message =
+      error.message +
+      `could not sending backspace to ${elementType} ${typeValue}`;
     throw error;
   }
 }
@@ -46,7 +48,7 @@ export async function backspace(
 export async function enter(
   self: World,
   elementType: string | SelectorType,
-  typeValue: string,
+  typeValue: string
 ) {
   if (!isSelectorType(elementType))
     throw new Error("elementType is not a valid selector type");
@@ -58,7 +60,7 @@ export async function enter(
       .findElement(elementLocator(elementType, typeValue))
       .sendKeys(Key.ENTER);
   } catch (error) {
-    console.error(`could not sending backspace to ${elementType} ${typeValue}`);
+    error.message = error.message`could not sending backspace to ${elementType} ${typeValue}`;
     throw error;
   }
 }

@@ -6,7 +6,7 @@ let debugLog = createLogger("screenshots");
 export const takeAndAttachScreenshot = async (self: World): Promise<void> => {
   debugLog(self, `Taking a screenshot and attaching to report`);
   const screenshot = await self.driver.takeScreenshot();
-  self.attach(screenshot, "image/png");
+  self.attach(Buffer.from(screenshot, "base64"), "image/png");
 };
 
 export const takeAndSaveScreenshot = async (

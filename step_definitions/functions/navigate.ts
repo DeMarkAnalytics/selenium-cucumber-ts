@@ -74,8 +74,7 @@ export async function getSystemModifierKey(self: World) {
   } else if (os === "DARWIN") {
     return "command";
   } else {
-    console.log(`Unknown OS type ${os}`);
-    throw "failed to get system modifier key";
+    throw `failed to get system modifier key.  unknown OS ${os}`;
   }
 }
 
@@ -91,17 +90,19 @@ export async function getSystemModifierKey(self: World) {
 export async function hoverOverElement(
   self: World,
   elementType: string,
-  typeValue: string,
+  typeValue: string
 ) {
   try {
     await waitForElementToBeLocated(self, elementType, typeValue, 6);
     debugLog(self, `hovering over ${elementType} ${typeValue}`);
     const element = await self.driver.findElement(
-      elementLocator(elementType, typeValue),
+      elementLocator(elementType, typeValue)
     );
     await self.driver.actions().move({ origin: element }).perform();
   } catch (error) {
-    console.error(`Failed to hover over element ${elementType} ${typeValue}`);
+    error.message =
+      error.message +
+      `Failed to hover over element ${elementType} ${typeValue}`;
     throw error;
   }
 }
@@ -109,7 +110,7 @@ export async function hoverOverElement(
 export async function setWindowSize(
   self: World,
   width: number,
-  height: number,
+  height: number
 ) {
   await self.driver
     .manage()
@@ -126,18 +127,18 @@ export async function dragAndDrop(
   sourceType: string,
   sourceTypeValue: string,
   targetType: string,
-  targetTypeValue: string,
+  targetTypeValue: string
 ) {
   debugLog(
     self,
-    `dragging ${sourceType} ${sourceTypeValue} to ${targetType} ${targetTypeValue}`,
+    `dragging ${sourceType} ${sourceTypeValue} to ${targetType} ${targetTypeValue}`
   );
 
   const sourceElement = await self.driver.findElement(
-    elementLocator(sourceType, sourceTypeValue),
+    elementLocator(sourceType, sourceTypeValue)
   );
   const targetElement = await self.driver.findElement(
-    elementLocator(targetType, targetTypeValue),
+    elementLocator(targetType, targetTypeValue)
   );
 
   // Create an Actions instance
@@ -150,6 +151,6 @@ export async function dragAndDrop(
   await self.driver.executeScript(
     dragAndDropScript.code,
     sourceElement,
-    targetElement,
+    targetElement
   );
 }

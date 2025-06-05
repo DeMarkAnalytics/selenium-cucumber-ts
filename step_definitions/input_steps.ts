@@ -27,11 +27,23 @@ Then(
 
 Then(
   /^I press the "(ENTER|BACK_SPACE|ARROW_UP|ARROW_DOWN|ARROW_LEFT|ARROW_RIGHT)" key$/,
-  async function (this: World, key: "ENTER" | "BACK_SPACE" | "ARROW_UP" | "ARROW_DOWN" | "ARROW_LEFT" | "ARROW_RIGHT") {
+  async function (
+    this: World,
+    key:
+      | "ENTER"
+      | "BACK_SPACE"
+      | "ARROW_UP"
+      | "ARROW_DOWN"
+      | "ARROW_LEFT"
+      | "ARROW_RIGHT"
+  ) {
     const keyName: keyof IKey = key;
 
     let actions = this.driver.actions({ async: false, bridge: true });
-    this.driver.actions({ async: false, bridge: true }).sendKeys(Key["ENTER"]).perform();
+    this.driver
+      .actions({ async: false, bridge: true })
+      .sendKeys(Key["ENTER"])
+      .perform();
     actions.sendKeys(Key[keyName]).perform();
   }
 );
