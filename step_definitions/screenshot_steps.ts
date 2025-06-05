@@ -13,5 +13,5 @@ Then(
   /^I take a screenshot and save it to "(a file|.+?)"$/,
   async function (this: World, path: string) {
     await takeAndSaveScreenshot(this, path);
-  }
+  },
 );

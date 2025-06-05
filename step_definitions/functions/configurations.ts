@@ -22,10 +22,10 @@ export async function printConfiguration(self: World) {
 async function printDesktopConfig(self: World) {
   debugLog(self, "printing desktop config");
   console.info(
-    `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`
+    `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`,
   );
   console.info(
-    `Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`
+    `Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`,
   );
   console.info("");
 }
@@ -34,10 +34,10 @@ async function printDesktopConfig(self: World) {
 async function printMobileConfig(self: World) {
   debugLog(self, "printing mobil config");
   console.info(
-    `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`
+    `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`,
   );
   console.info(
-    `Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`
+    `Browser  : ${(await self.driver.getCapabilities()).getBrowserName()}`,
   );
   console.info("");
 }

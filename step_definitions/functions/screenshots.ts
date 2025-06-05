@@ -11,7 +11,7 @@ export const takeAndAttachScreenshot = async (self: World): Promise<void> => {
 
 export const takeAndSaveScreenshot = async (
   self: World,
-  path?: string
+  path?: string,
 ): Promise<void> => {
   if (!path) {
     path = `screenshots/screenshots/snapshot-${new Date().toString()}.png`;
