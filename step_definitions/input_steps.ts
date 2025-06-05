@@ -2,11 +2,8 @@ import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
 import * as input from "./functions/inputs";
 import * as press from "./functions/keys";
-import {
-  SelectorType,
-  isSelectorType,
-  elementIdentifiers,
-} from "./functions/elements";
+import { SelectorType, isSelectorType } from "./functions/elements";
+import { IKey, Key } from "selenium-webdriver/lib/input";
 
 Then(
   /^I enter "(.*?)" into input field having (id|name|class|xpath|css) "(.*?)"$/,
@@ -18,6 +15,36 @@ Then(
   ) {
     if (!isSelectorType(elementType)) throw new Error("Invalid selector type");
     await input.enterText(this, elementType, typeValue, text);
+  },
+);
+
+Then(
+  /^I enter the text "(.*)" into the currently selected element/,
+  async function (this: World, key: string) {
+    this.driver.actions({ async: false, bridge: true }).sendKeys(key).perform();
+  },
+);
+
+Then(
+  /^I press the "(ENTER|BACK_SPACE|ARROW_UP|ARROW_DOWN|ARROW_LEFT|ARROW_RIGHT)" key$/,
+  async function (
+    this: World,
+    key:
+      | "ENTER"
+      | "BACK_SPACE"
+      | "ARROW_UP"
+      | "ARROW_DOWN"
+      | "ARROW_LEFT"
+      | "ARROW_RIGHT",
+  ) {
+    const keyName: keyof IKey = key;
+
+    let actions = this.driver.actions({ async: false, bridge: true });
+    this.driver
+      .actions({ async: false, bridge: true })
+      .sendKeys(Key["ENTER"])
+      .perform();
+    actions.sendKeys(Key[keyName]).perform();
   },
 );
 
@@ -34,9 +61,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^I select (.*?) option by (.*?) from dropdown having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I select (.*?) option by (.*?) from dropdown having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     option: string,
@@ -56,9 +81,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^I select all options from multiselect dropdown having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I select all options from multiselect dropdown having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
@@ -74,9 +97,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^I unselect all options from multiselect dropdown having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I unselect all options from multiselect dropdown having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
@@ -93,7 +114,7 @@ Then(
 
 //  /^I check the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
 Then(
-  new RegExp(`^I check the checkbox having (${elementIdentifiers}) "(.*?)"$`),
+  /^I check the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
@@ -105,7 +126,7 @@ Then(
 );
 
 Then(
-  new RegExp(`^I uncheck the checkbox having (${elementIdentifiers}) "(.*?)"$`),
+  /^I uncheck the checkbox having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
@@ -117,7 +138,7 @@ Then(
 );
 
 Then(
-  new RegExp(`^I toggle checkbox having (${elementIdentifiers}) "(.*?)"$`),
+  /^I toggle checkbox having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
@@ -129,7 +150,7 @@ Then(
 );
 
 Then(
-  new RegExp(`^I select radio button having (${elementIdentifiers}) "(.*?)"$`),
+  /^I select radio button having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType | SelectorType,
@@ -141,9 +162,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^I select "(.*?)" option by (.*?) from radio button group having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I select "(.*?)" option by (.*?) from radio button group having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     elementType: string | SelectorType,
@@ -161,9 +180,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^I send the key (enter|backspace) to the element having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+  /^I send the key (enter|backspace) to the element having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     key: string,

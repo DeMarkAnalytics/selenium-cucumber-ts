@@ -1,10 +1,17 @@
 import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
-import fs from "fs";
+import {
+  takeAndAttachScreenshot,
+  takeAndSaveScreenshot,
+} from "./functions/screenshots";
 
 Then(/^I take a screenshot$/, async function (this: World) {
-  const screenshot = await this.driver.takeScreenshot();
-  fs.appendFile("screnshots/test.png", screenshot, function (err) {
-    if (err) throw err;
-  });
+  await takeAndAttachScreenshot(this);
 });
+
+Then(
+  /^I take a screenshot and save it to "(a file|.+?)"$/,
+  async function (this: World, path: string) {
+    await takeAndSaveScreenshot(this, path);
+  },
+);

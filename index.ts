@@ -8,3 +8,4 @@ export * from "./step_definitions/functions/keys";
 export * from "./step_definitions/functions/navigate";
 export * from "./step_definitions/functions/pageAssertions";
 export * from "./step_definitions/functions/progress";
+export * from "./step_definitions/functions/debugLogs";

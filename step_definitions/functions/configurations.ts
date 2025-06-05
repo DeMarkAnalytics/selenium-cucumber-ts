@@ -1,8 +1,9 @@
 import { World } from "../world";
-let debugLog = require("debug")("configurations");
+import createLogger from "./debugLogs";
+let debugLog = createLogger("configurations");
 
 export async function printConfiguration(self: World) {
-  debugLog("Printing configuration");
+  debugLog(self, "Printing configuration");
   const date = new Date();
   const capabilities = await self.driver.getCapabilities();
   console.info("");
@@ -19,7 +20,7 @@ export async function printConfiguration(self: World) {
 }
 
 async function printDesktopConfig(self: World) {
-  debugLog("printing desktop config");
+  debugLog(self, "printing desktop config");
   console.info(
     `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`,
   );
@@ -31,7 +32,7 @@ async function printDesktopConfig(self: World) {
 
 // TODO: implement mobile platform items
 async function printMobileConfig(self: World) {
-  debugLog("printing mobil config");
+  debugLog(self, "printing mobil config");
   console.info(
     `Platform : ${(await self.driver.getCapabilities()).getPlatform()}`,
   );
