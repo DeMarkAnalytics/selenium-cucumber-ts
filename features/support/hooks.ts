@@ -4,7 +4,9 @@ import { World } from "./world";
 Before(function (this: World, scenario) {});
 
 AfterStep(async function (this: World) {
-  this.attach(this.debugLog);
+  if (this.debugLog.length > 0) {
+    this.attach(this.debugLog);
+  }
   this.debugLog = "";
 });
 
