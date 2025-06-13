@@ -1,7 +1,9 @@
 import { World } from "./world";
 import { Then } from "@cucumber/cucumber";
 import * as page from "./functions/pageAssertions";
-import { elements, elementIdentifiers } from "./functions/elements";
+import { elementLocator } from "./functions/elements";
+import { createLogger } from "./functions/debugLogs";
+const debugLog = createLogger("assertion_steps");
 
 Then(
   /^I should (not )?see (?:the )?page title as "(.*?)"$/,
@@ -20,9 +22,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^(?:${elements}) having (${elementIdentifiers}) "(.*?)" should (not )?have text as "(.*?)"$`,
-  ),
+  /^(?:element|button|link|menu item|selection|input") having (id|name|class|xpath|css) "(.*?)" should (not )?have text as "(.*?)"$/,
   async function (
     this: World,
     elementType: string,
@@ -42,9 +42,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^(?:${elements}) having (${elementIdentifiers}) "(.*?)" should (not )?have partial text as "(.*?)"$`,
-  ),
+  /^(?:element|button|link|menu item|selection|input") having (id|name|class|xpath|css) "(.*?)" should (not )?have partial text as "(.*?)"$/,
   async function (
     this: World,
     elementType: string,
@@ -64,9 +62,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^(?:${elements}) having (${elementIdentifiers}) "(.*?)" should (not )?have attribute "(.*?)" with value "(.*?)"$`,
-  ),
+  /^(?:element|button|link|menu item|selection|input") having (id|name|class|xpath|css) "(.*?)" should (not )?have attribute "(.*?)" with value "(.*?)"$/,
   async function (
     this: World,
     elementType: string,
@@ -88,9 +84,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^(?:${elements}) having (${elementIdentifiers}) "(.*?)" should (not )?be (enabled|disabled)$`,
-  ),
+  /^(?:element|button|link|menu item|selection|input") having (id|name|class|xpath|css) "(.*?)" should (not )?be (enabled|disabled)$/,
   async function (
     this: World,
     elementType: string,
@@ -104,9 +98,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^(?:${elements}) having (${elementIdentifiers}) "(.*?)" should (not )?be present$`,
-  ),
+  /^(?:element|button|link|menu item|selection|input") having (id|name|class|xpath|css) "(.*?)" should (not )?be present$/,
   async function (
     this: World,
     elementType: string,
@@ -119,9 +111,38 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^checkbox having (${elementIdentifiers}) "(.*?)" should be (checked|unchecked)$`,
-  ),
+  /^I should see (?:element|button|link|menu item|selection|input}) having (id|name|class|xpath|css) "(.*?)" above (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)"$/,
+  async function (
+    this: World,
+    type1: string,
+    type1Value: string,
+    type2: string,
+    type2Value,
+  ) {
+    let firstElement = await this.driver.findElement(
+      elementLocator(type1, type1Value),
+    );
+    let firstElementRect = await firstElement.getRect();
+    let secondElement = await this.driver.findElement(
+      elementLocator(type2, type2Value),
+    );
+    let secondElementRect = await secondElement.getRect();
+    debugLog(
+      this,
+      `first < second | ${firstElementRect.y} < ${secondElementRect.y}`,
+    );
+    if (firstElementRect.y < secondElementRect.y) {
+      return;
+    } else {
+      throw new Error(
+        `Element having ${type1} ${type1Value} is above element having ${type2} ${type2Value}`,
+      );
+    }
+  },
+);
+
+Then(
+  /^checkbox having (id|name|class|xpath|css) "(.*?)" should be (checked|unchecked)$/,
   async function (
     this: World,
     elementType: string,
@@ -133,9 +154,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^radio button having (${elementIdentifiers}) "(.*?)" should be (selected|unselected)$`,
-  ),
+  /^radio button having (id|name|class|xpath|css) "(.*?)" should be (selected|unselected)$/,
   async function (
     this: World,
     elementType: string,
@@ -148,9 +167,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^option "(.*?)" by (.*?) from radio button group having (${elementIdentifiers}) "(.*?)" should be (selected|unselected)$`,
-  ),
+  /^option "(.*?)" by (.*?) from radio button group having (id|name|class|xpath|css) "(.*?)" should be (selected|unselected)$/,
   async function (
     this: World,
     option: string,
@@ -195,9 +212,7 @@ Then(
 );
 
 Then(
-  new RegExp(
-    `^option "(.*?)" by (.*?) from dropdown having (${elementIdentifiers}) "(.*?)" should be (selected|unselected)$`,
-  ),
+  /^option "(.*?)" by (.*?) from dropdown having (id|name|class|xpath|css) "(.*?)" should be (selected|unselected)$/,
   async function (
     this: World,
     option: string,
@@ -213,28 +228,5 @@ Then(
       optionAttribute,
       state,
     );
-  },
-);
-
-Then(
-  new RegExp(
-    `^actual image having (.+?) "(.*?)" and expected image having (${elementIdentifiers}) "(.*?)" should be similar$`,
-  ),
-  async function (
-    this: World,
-    actualImageType: string,
-    actualImageName: string,
-    expectedImageType: string,
-    expectedImageName: string,
-  ) {
-    await page.isImageSimilar(
-      this,
-      actualImageType,
-      actualImageName,
-      expectedImageType,
-      expectedImageName,
-    );
-    // TODO
-    return "pending";
   },
 );

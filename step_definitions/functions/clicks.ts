@@ -1,7 +1,9 @@
 import { World } from "../world";
 import { elementLocator, SelectorType } from "./elements";
-import { waitForElementToBeClickable } from "./progress";
-let debugLog = require("debug")("clicks");
+import { waitForElementToBeClickable, duration } from "./progress";
+import createLogger from "./debugLogs";
+import { WebElement } from "selenium-webdriver";
+let debugLog = createLogger("clicks");
 
 /**
  * Description: Clicks on an element
@@ -19,23 +21,32 @@ export async function click(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const waitSecondsNum = parseInt(waitSeconds.toString());
+  const startTime = Date.now();
+
+  debugLog(
+    self,
+    `clicking on ${elementType} ${typeValue} after waiting up to ${waitSeconds} seconds for it to be clickable`,
+  );
   await waitForElementToBeClickable(
     self,
     elementType,
     typeValue,
-    parseInt(`${waitSeconds}`),
+    waitSecondsNum,
   );
 
-  debugLog(`clicking on ${elementType} ${typeValue}`);
   try {
     // give a little time for the element to be located in case animations or other things are happening
     await self.driver
       .findElement(elementLocator(elementType, typeValue))
       .click();
   } catch (error) {
-    console.error(`could not click on ${elementType} ${typeValue}`);
+    error.message =
+      error.message + `could not click on ${elementType} ${typeValue}`;
     throw error;
   }
+
+  duration(self, "click", startTime, waitSecondsNum);
 }
 
 /**
@@ -56,6 +67,7 @@ export async function clickIfExists(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -65,12 +77,14 @@ export async function clickIfExists(
     );
 
     debugLog(
+      self,
       `looking for ${waitSeconds} seconds to click on ${elementType} ${typeValue}`,
     );
     await click(self, elementType as SelectorType, typeValue);
   } catch (error) {
-    debugLog(`didn't find ${elementType} ${typeValue}`);
+    debugLog(self, `didn't find ${elementType} ${typeValue}`);
   }
+  duration(self, "clickIfExists", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -89,6 +103,7 @@ export async function doubleClick(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -97,15 +112,16 @@ export async function doubleClick(
       parseInt(waitSeconds.toString()),
     );
 
-    debugLog(`doubleClicking on ${elementType} ${typeValue}`);
+    debugLog(self, `doubleClicking on ${elementType} ${typeValue}`);
     let doubleClickElement = await self.driver.findElement(
       elementLocator(elementType, typeValue),
     );
     await self.driver.actions().doubleClick(doubleClickElement).perform();
   } catch (error) {
-    console.error(`could not doubleClick on ${elementType} ${typeValue}`);
+    error.message = error.message`could not doubleClick on ${elementType} ${typeValue}`;
     throw error;
   }
+  duration(self, "doubleClick", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -124,6 +140,7 @@ export async function rightClick(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -132,15 +149,17 @@ export async function rightClick(
       parseInt(waitSeconds.toString()),
     );
 
-    debugLog(`rightClicking on ${elementType} ${typeValue}`);
+    debugLog(self, `rightClicking on ${elementType} ${typeValue}`);
     let rightClickElement = await self.driver.findElement(
       elementLocator(elementType, typeValue),
     );
     await self.driver.actions().contextClick(rightClickElement).perform();
   } catch (error) {
-    console.error(`could not rightClick on ${elementType} ${typeValue}`);
+    error.message =
+      error.message + `could not rightClick on ${elementType} ${typeValue}`;
     throw error;
   }
+  duration(self, "rightClick", startTime, parseInt(waitSeconds.toString()));
 }
 
 /**
@@ -159,6 +178,7 @@ export async function clickForcefully(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -167,15 +187,23 @@ export async function clickForcefully(
       parseInt(waitSeconds.toString()),
     );
 
-    debugLog(`clicking forcefully on ${elementType} ${typeValue}`);
+    debugLog(self, `clicking forcefully on ${elementType} ${typeValue}`);
     let forceClickElement = await self.driver.findElement(
       elementLocator(elementType, typeValue),
     );
     await self.driver.executeScript("arguments[0]click();", forceClickElement);
   } catch (error) {
-    console.error(`could not click forcefully on ${elementType} ${typeValue}`);
+    error.message =
+      error.message +
+      `could not click forcefully on ${elementType} ${typeValue}`;
     throw error;
   }
+  duration(
+    self,
+    "clickForcefully",
+    startTime,
+    parseInt(waitSeconds.toString()),
+  );
 }
 
 /**
@@ -194,6 +222,7 @@ export async function submit(
   typeValue: string,
   waitSeconds: number | string = "6",
 ) {
+  const startTime = Date.now();
   try {
     await waitForElementToBeClickable(
       self,
@@ -202,12 +231,24 @@ export async function submit(
       parseInt(waitSeconds.toString()),
     );
 
-    debugLog(`submitting ${elementType} ${typeValue}`);
+    debugLog(self, `submitting ${elementType} ${typeValue}`);
     await self.driver
       .findElement(elementLocator(elementType, typeValue))
       .submit();
   } catch (error) {
-    console.error(`could not submit ${elementType} ${typeValue}`);
+    error.message =
+      error.message + `could not submit ${elementType} ${typeValue}`;
     throw error;
   }
+  duration(self, "submit", startTime, parseInt(waitSeconds.toString()));
+}
+
+export async function mouseOver(self: World, element: WebElement) {
+  const actions = self.driver.actions({ async: false, bridge: true });
+  await actions.move({ origin: element }).perform();
+}
+
+export async function mouseOverAndClick(self: World, element: WebElement) {
+  const actions = self.driver.actions({ async: false, bridge: true });
+  await actions.move({ origin: element }).click().perform();
 }

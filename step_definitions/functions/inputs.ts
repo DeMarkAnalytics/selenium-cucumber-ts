@@ -1,7 +1,8 @@
 import { World } from "../world";
 import { SelectorType, elementLocator } from "./elements";
 import { Key } from "selenium-webdriver";
-let debugLog = require("debug")("inputs");
+import createLogger from "./debugLogs";
+let debugLog = createLogger("inputs");
 
 /**
  * Description: Enters text into an element
@@ -19,7 +20,7 @@ export async function enterText(
   typeValue: string,
   text: string,
 ) {
-  debugLog(`Entering text into ${elementType} ${typeValue}`);
+  debugLog(self, `Entering text into ${elementType} ${typeValue}`);
   await (await self.driver)
     .findElement(elementLocator(elementType, typeValue))
     .sendKeys(text);
@@ -39,13 +40,22 @@ export async function clearText(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`clearing text from ${elementType} ${typeValue}`);
+  debugLog(self, `clearing text from ${elementType} ${typeValue}`);
   await self.driver.findElement(elementLocator(elementType, typeValue)).clear();
   // clear() doesn't work in all browsers
   // https://stackoverflow.com/questions/7732125/clear-text-from-textarea-with-selenium
-  await self.driver
-    .findElement(elementLocator(elementType, typeValue))
-    .sendKeys(Key.CONTROL + "a");
+
+  // Check if we're on a mac
+  if (process.platform == "darwin") {
+    await self.driver
+      .findElement(elementLocator(elementType, typeValue))
+      .sendKeys(Key.COMMAND + "a");
+  } else {
+    await self.driver
+      .findElement(elementLocator(elementType, typeValue))
+      .sendKeys(Key.CONTROL + "a");
+  }
+
   await self.driver
     .findElement(elementLocator(elementType, typeValue))
     .sendKeys(Key.DELETE);
@@ -73,6 +83,7 @@ export async function selectOptionFromDropdown(
   optionType: string = "value",
 ) {
   debugLog(
+    self,
     `selecting option ${option} from dropdown ${elementType} ${typeValue}`,
   );
   const xpathOption =
@@ -105,7 +116,10 @@ export async function selectAllOptionsFromMultiselectDropdown(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`selecting all options from dropdown ${elementType} ${typeValue}`);
+  debugLog(
+    self,
+    `selecting all options from dropdown ${elementType} ${typeValue}`,
+  );
   let dropdown = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -128,7 +142,10 @@ export async function unselectAllOptionsFromMultiselectDropdown(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`unselecting all options from dropdown ${elementType} ${typeValue}`);
+  debugLog(
+    self,
+    `unselecting all options from dropdown ${elementType} ${typeValue}`,
+  );
   let dropdown = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -151,7 +168,7 @@ export async function checkCheckbox(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`checking checkbox ${elementType} ${typeValue}`);
+  debugLog(self, `checking checkbox ${elementType} ${typeValue}`);
   let checkbox = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -177,7 +194,7 @@ export async function uncheckCheckbox(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`unchecking checkbox ${elementType} ${typeValue}`);
+  debugLog(self, `unchecking checkbox ${elementType} ${typeValue}`);
   let checkbox = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -203,7 +220,7 @@ export async function toggleCheckbox(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`toggle checkbox ${elementType} ${typeValue}`);
+  debugLog(self, `toggle checkbox ${elementType} ${typeValue}`);
   let checkbox = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -227,7 +244,7 @@ export async function selectRadioButton(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`select Radio button ${elementType} ${typeValue}`);
+  debugLog(self, `select Radio button ${elementType} ${typeValue}`);
   let radioButton = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -253,7 +270,7 @@ export async function unselectRadioButton(
   elementType: string | SelectorType,
   typeValue: string,
 ) {
-  debugLog(`unselect Radio button ${elementType} ${typeValue}`);
+  debugLog(self, `unselect Radio button ${elementType} ${typeValue}`);
   let radioButton = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );
@@ -281,7 +298,7 @@ export async function selectOptionFromRadioButtonGroup(
   typeValue: string,
   option: string,
 ) {
-  debugLog(`select Radio button ${elementType} ${typeValue}`);
+  debugLog(self, `select Radio button ${elementType} ${typeValue}`);
   let radioButtonGroup = await self.driver.findElement(
     elementLocator(elementType, typeValue),
   );

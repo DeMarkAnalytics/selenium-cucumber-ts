@@ -4,11 +4,9 @@ const feature = [
   "--require-module ts-node/register",
   "--require features/**/*.ts",
   "--require step_definitions/**/*.ts",
-  `--format ${
-    process.env.CI || !process.stdout.isTTY ? "progress" : "progress-bar"
-  }`,
-  "--format usage:reports/usage.txt",
-  "--publish-quiet",
+  `--format usage:./reports/report.txt`,
+  `--format json:./reports/report.json`,
+  `--format html:./reports/report.html`,
   '--tags "not @disabled"',
 ].join(" ");
 
