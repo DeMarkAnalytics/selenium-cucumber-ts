@@ -1,9 +1,10 @@
+import { World as SeleniumCucumberWorld } from "../../step_definitions/world";
+import { World as CucumberWorld } from "@cucumber/cucumber";
 import { setWorldConstructor, setDefaultTimeout } from "@cucumber/cucumber";
 import { Builder } from "selenium-webdriver";
 //import firefox from 'selenium-webdriver/firefox'
 import chrome from "selenium-webdriver/chrome";
 //import { World as restWorld } from "@symbolik/selenium-cucumber-ts/step_definitions/world"
-import { World as SeleniumCucumberWorld } from "../../step_definitions/world";
 
 import {
   ICreateAttachment,
@@ -19,9 +20,10 @@ chromeOptions.addArguments("--start-maximized");
 chromeOptions.addArguments("--headless");
 
 //export class World implements selcucWorld implements restWorld {
-export class World implements SeleniumCucumberWorld {
+export class World extends CucumberWorld implements SeleniumCucumberWorld {
   attach: ICreateAttachment;
   log: ICreateLog;
+  debugLog: string = "";
   parameters: any;
   public driver = new Builder()
     .forBrowser("chrome")

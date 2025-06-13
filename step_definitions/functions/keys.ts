@@ -2,7 +2,8 @@ import { World } from "../world";
 import { Key } from "selenium-webdriver";
 import { SelectorType, elementLocator, isSelectorType } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
-let debugLog = require("debug")("keys");
+import createLogger from "./debugLogs";
+let debugLog = createLogger("keys");
 
 /**
  * Description: Sends the backspace key to an element
@@ -23,12 +24,14 @@ export async function backspace(
 
   try {
     await waitForElementToBeLocated(self, elementType, typeValue, 6);
-    debugLog(`sending backspace to ${elementType} ${typeValue}`);
+    debugLog(self, `sending backspace to ${elementType} ${typeValue}`);
     await self.driver
       .findElement(elementLocator(elementType, typeValue))
       .sendKeys(Key.BACK_SPACE);
   } catch (error) {
-    console.error(`could not sending backspace to ${elementType} ${typeValue}`);
+    error.message =
+      error.message +
+      `could not sending backspace to ${elementType} ${typeValue}`;
     throw error;
   }
 }
@@ -52,12 +55,12 @@ export async function enter(
 
   try {
     await waitForElementToBeLocated(self, elementType, typeValue, 6);
-    debugLog(`sending enter to ${elementType} ${typeValue}`);
+    debugLog(self, `sending enter to ${elementType} ${typeValue}`);
     await self.driver
       .findElement(elementLocator(elementType, typeValue))
       .sendKeys(Key.ENTER);
   } catch (error) {
-    console.error(`could not sending backspace to ${elementType} ${typeValue}`);
+    error.message = error.message`could not sending backspace to ${elementType} ${typeValue}`;
     throw error;
   }
 }

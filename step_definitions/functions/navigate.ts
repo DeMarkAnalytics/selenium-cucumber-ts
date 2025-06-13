@@ -2,7 +2,8 @@ import { World } from "../world";
 import { elementLocator } from "./elements";
 import { waitForElementToBeLocated } from "./progress";
 import dragAndDropScript from "html-dnd";
-let debugLog = require("debug")("navigate");
+import createLogger from "./debugLogs";
+let debugLog = createLogger("navigate");
 
 /**
  * Description: Navigates to a URL
@@ -13,7 +14,7 @@ let debugLog = require("debug")("navigate");
  * @returns Promise<void>
  */
 export async function navigateTo(self: World, url: string) {
-  debugLog(`attempting to open ${url}`);
+  debugLog(self, `attempting to open ${url}`);
   await self.driver.get(url);
 }
 
@@ -27,10 +28,10 @@ export async function navigateTo(self: World, url: string) {
  */
 export async function navigate(self: World, direction: "back" | "forward") {
   if (direction === "back") {
-    debugLog("pressing back button");
+    debugLog(self, "pressing back button");
     await self.driver.navigate().back();
   } else {
-    debugLog("pressing forward button");
+    debugLog(self, "pressing forward button");
     await self.driver.navigate().forward();
   }
 }
@@ -43,7 +44,7 @@ export async function navigate(self: World, direction: "back" | "forward") {
  * @returns Promise<void>
  */
 export async function closeDriver(self: World) {
-  debugLog("shutting down");
+  debugLog(self, "shutting down");
   self.driver.quit;
 }
 
@@ -55,7 +56,7 @@ export async function closeDriver(self: World) {
  * @returns Promise<void>
  */
 export async function refreshPage(self: World) {
-  debugLog("refresh");
+  debugLog(self, "refresh");
   await self.driver.navigate().refresh();
 }
 
@@ -73,8 +74,7 @@ export async function getSystemModifierKey(self: World) {
   } else if (os === "DARWIN") {
     return "command";
   } else {
-    console.log(`Unknown OS type ${os}`);
-    throw "failed to get system modifier key";
+    throw `failed to get system modifier key.  unknown OS ${os}`;
   }
 }
 
@@ -94,13 +94,15 @@ export async function hoverOverElement(
 ) {
   try {
     await waitForElementToBeLocated(self, elementType, typeValue, 6);
-    debugLog(`hovering over ${elementType} ${typeValue}`);
+    debugLog(self, `hovering over ${elementType} ${typeValue}`);
     const element = await self.driver.findElement(
       elementLocator(elementType, typeValue),
     );
     await self.driver.actions().move({ origin: element }).perform();
   } catch (error) {
-    console.error(`Failed to hover over element ${elementType} ${typeValue}`);
+    error.message =
+      error.message +
+      `Failed to hover over element ${elementType} ${typeValue}`;
     throw error;
   }
 }
@@ -128,6 +130,7 @@ export async function dragAndDrop(
   targetTypeValue: string,
 ) {
   debugLog(
+    self,
     `dragging ${sourceType} ${sourceTypeValue} to ${targetType} ${targetTypeValue}`,
   );
 

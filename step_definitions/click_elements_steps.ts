@@ -1,18 +1,16 @@
-import { When } from "@cucumber/cucumber";
+import { Then } from "@cucumber/cucumber";
 import { World } from "./world";
 import * as mouse from "./functions/clicks";
 import {
-  elements,
-  elementIdentifiers,
   isSelectorType,
   SelectorType,
+  validateLocater,
 } from "./functions/elements";
 import { dragAndDrop } from "./functions/navigate";
+import { clickIfExists } from "./functions/clicks";
 
-When(
-  new RegExp(
-    `^I click on (?:${elements}) having (${elementIdentifiers}) "(.*?)" and text "(.*?)"$`,
-  ),
+Then(
+  /^I click on (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)" and text "(.*?)"$/,
   async function (
     this: World,
     elementType: string,
@@ -27,73 +25,69 @@ When(
   },
 );
 
-When(
-  new RegExp(
-    `^I click on (?:${elements}) having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+Then(
+  /^I click on (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)"$/,
   async function (this: World, elementType: string, typeValue: string) {
     await mouse.click(this, elementType as SelectorType, typeValue);
   },
 );
 
-When(
-  new RegExp(
-    `^I forcefully click on (?:${elements}) having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+Then(
+  /^I click on element having (id|name|class|xpath|css) "(.*?)" if it exists?$/,
+  async function (this: World, elementType: string, typeValue: string) {
+    validateLocater(elementType);
+    await clickIfExists(this, elementType, typeValue, "3");
+  },
+);
+
+Then(
+  /^I forcefully click on (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)"$/,
   async function (this: World, elementType: string, typeValue: string) {
     isSelectorType(elementType);
     await mouse.clickForcefully(this, elementType, typeValue);
   },
 );
 
-When(
-  new RegExp(
-    `^I right click on (?:${elements}) having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+Then(
+  /^I right click on (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)"$/,
   async function (this: World, elementType: string, typeValue: string) {
     isSelectorType(elementType);
     await mouse.rightClick(this, elementType, typeValue);
   },
 );
 
-When(
-  new RegExp(
-    `^I double click on (?:${elements}) having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+Then(
+  /^I double click on (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)"$/,
   async function (this: World, elementType: string, typeValue: string) {
     isSelectorType(elementType);
     await mouse.doubleClick(this, elementType, typeValue);
   },
 );
 
-When(
+Then(
   /^I click on link having text "(.*?)"$/,
   async function (this: World, text: string) {
     await mouse.click(this, "xpath", `//a[text()="${text}"]`);
   },
 );
 
-When(
+Then(
   /^I click on link having partial text "(.*?)"$/,
   async function (this: World, text: string) {
     await mouse.click(this, "xpath", `//a/[contains(text(), "${text}")]`);
   },
 );
 
-When(
-  new RegExp(
-    `^I tap on (?:${elements}) having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+Then(
+  /^I tap on (?:element|button|link|menu item|selection|input) having (id|name|class|xpath|css) "(.*?)"$/,
   async function (this: World, elementType: string, typeValue: string) {
     isSelectorType(elementType);
     await mouse.click(this, elementType as SelectorType, typeValue);
   },
 );
 
-When(
-  new RegExp(
-    `^I drag element having (${elementIdentifiers}) "(.*?)" and drop it on element having (${elementIdentifiers}) "(.*?)"$`,
-  ),
+Then(
+  /^I drag element having (id|name|class|xpath|css) "(.*?)" and drop it on element having (id|name|class|xpath|css) "(.*?)"$/,
   async function (
     this: World,
     sourceType: string,
